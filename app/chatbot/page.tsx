@@ -14,10 +14,10 @@ export default function Chatbot() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-green text-white">
-        <header className="container mx-auto py-8 px-4">
+        <div className="min-h-screen bg-gradient-to-br from-green-400 to-blue-500 text-white font-sans">
+        <header className="container mx-auto py-6 px-4">
             <nav className="flex justify-between items-center">
-            <Link href="/" className="text-3xl font-bold hover:text-yellow-300 transition-colors">
+            <Link href="/" className="text-4xl font-extrabold tracking-tight">
                 SoccerBrand
             </Link>
             <Link href="/" className="text-lg hover:text-yellow-300 transition-colors">
@@ -26,10 +26,10 @@ export default function Chatbot() {
             </nav>
         </header>
 
-        <main className="container mx-auto px-4 py-8">
-            <h1 className="text-4xl font-bold mb-8 text-center">Chat with TekkAI</h1>
-            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="h-96 bg-gray-100 p-4 overflow-y-auto" id="chat-messages">
+        <main className="container mx-auto px-4 py-12">
+            <h1 className="text-5xl font-bold mb-12 text-center">Chat with TekkAI</h1>
+            <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden">
+            <div className="h-96 bg-gray-100 p-6 overflow-y-auto" id="chat-messages">
                 {/* Chat messages will be displayed here */}
             </div>
                 <div className="p-4 bg-gray-200">
@@ -44,7 +44,7 @@ export default function Chatbot() {
                     />
                     <button
                         type="submit"
-                        className="bg-yellow-500 text-white px-6 py-2 rounded-r-lg hover:bg-yellow-600 transition-colors"
+                        className="bg-yellow-500 text-white px-6 py-2 rounded-r-lg hover:bg-yellow-600 transition-colors font-semibold"
                         aria-label="Send message"
                     >
                         Send
