@@ -4,7 +4,7 @@ import ContactForm from './components/ContactForm'
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-sky-200 text-gray-800 font-sans">
+    <div className="min-h-screen bg-gradient-to-br from-sky-200 to-sky-300 text-gray-800 font-sans">
       <header className="container mx-auto py-6 px-4">
         <nav className="flex justify-between items-center">
           <h1 className="text-4xl font-extrabold">ConklinOfficial</h1>

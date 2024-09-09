@@ -5,6 +5,7 @@ export default function Chatbot() {
 
     const [message, setMessage] = useState('');
 
+    // this is the function that will be called when the user submits a message, for now it just logs the message to the console
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // Handle the form submission logic here
