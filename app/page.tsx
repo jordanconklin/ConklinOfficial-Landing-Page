@@ -1,23 +1,6 @@
-// import Link from 'next/link'
-
-// export default function Home() {
-//   return (
-//     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-blue-800 to-blue-600 text-white">
-//       <header className="mb-8">
-//         <h1 className="text-4xl font-bold">Welcome to Your Soccer Brand</h1>
-//       </header>
-//       <main className="text-center">
-//         <p className="mb-4">Explore our products and become the star player of your team!</p>
-//         <Link href="/chatbot" className="inline-block px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors">
-//           Chat with TekkAI
-//         </Link>
-//       </main>
-//     </div>
-//   )
-// }
-
 import Link from 'next/link'
 import Image from 'next/image'
+import ContactForm from './components/ContactForm';
 
 export default function Home() {
   return (
@@ -37,7 +20,6 @@ export default function Home() {
         <section className="py-20 text-center">
           <h2 className="text-5xl font-bold mb-6">Welcome to Your Soccer Brand</h2>
           <p className="text-xl mb-8">Explore our products and become the star player of your team!</p>
-          {/* <Link href="/chatbot" className="inline-block px-6 py-3 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors text-lg font-semibold"> */}
           <Link href="/chatbot" className="inline-block px-6 py-3 bg-yellow-500 text-white rounded-full hover:bg-yellow-600 transition-colors text-lg font-semibold">
             Chat with TekkAI
           </Link>
@@ -70,20 +52,7 @@ export default function Home() {
 
         <section id="contact" className="py-16">
           <h3 className="text-3xl font-bold mb-8 text-center">Contact Us</h3>
-          <form className="max-w-lg mx-auto">
-            <div className="mb-4">
-              <input type="text" placeholder="Your Name" className="w-full px-4 py-2 rounded bg-blue-700 text-white placeholder-blue-300" />
-            </div>
-            <div className="mb-4">
-              <input type="email" placeholder="Your Email" className="w-full px-4 py-2 rounded bg-blue-700 text-white placeholder-blue-300" />
-            </div>
-            <div className="mb-4">
-              <textarea placeholder="Your Message" rows={4} className="w-full px-4 py-2 rounded bg-blue-700 text-white placeholder-blue-300"></textarea>
-            </div>
-            <button type="submit" className="w-full bg-yellow-500 text-white py-2 rounded hover:bg-yellow-600 transition-colors">
-              Send Message
-            </button>
-          </form>
+          <ContactForm />
         </section>
       </main>
 
