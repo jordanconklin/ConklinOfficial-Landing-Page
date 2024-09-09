@@ -9,17 +9,20 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
-      <div className="mb-4">
-        <input type="text" placeholder="Your Name" className="w-full px-4 py-2 rounded bg-blue-700 text-white placeholder-blue-300" />
+    <form onSubmit={handleSubmit} className="max-w-lg mx-auto bg-white rounded-lg shadow-xl p-8">
+      <div className="mb-6">
+        <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">Your Name</label>
+        <input type="text" id="name" placeholder="John Doe" className="w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" />
       </div>
-      <div className="mb-4">
-        <input type="email" placeholder="Your Email" className="w-full px-4 py-2 rounded bg-blue-700 text-white placeholder-blue-300" />
+      <div className="mb-6">
+        <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">Your Email</label>
+        <input type="email" id="email" placeholder="john@example.com" className="w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" />
       </div>
-      <div className="mb-4">
-        <textarea placeholder="Your Message" rows={4} className="w-full px-4 py-2 rounded bg-blue-700 text-white placeholder-blue-300"></textarea>
+      <div className="mb-6">
+        <label htmlFor="message" className="block text-gray-700 text-sm font-bold mb-2">Your Message</label>
+        <textarea id="message" rows={4} placeholder="How can we help you?" className="w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"></textarea>
       </div>
-      <button type="submit" className="w-full bg-yellow-500 text-white py-2 rounded hover:bg-yellow-600 transition-colors">
+      <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">
         Send Message
       </button>
     </form>

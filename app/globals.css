@@ -3,9 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 46, 204, 113;
-  --background-end-rgb: 39, 174, 96;
+  --foreground-rgb: 31, 41, 55;
+  --background-rgb: 186, 230, 253;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,10 +29,4 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
-
-/* Add this to ensure visible focus states */
-*:focus {
-  outline: 2px solid #fbbf24;
-  outline-offset: 2px;
 }

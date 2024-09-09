@@ -1,7 +1,6 @@
 'use client';
 import { useState, FormEvent } from 'react';
 import Link from 'next/link'
-
 export default function Chatbot() {
 
     const [message, setMessage] = useState('');
@@ -14,13 +13,13 @@ export default function Chatbot() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-400 to-blue-500 text-white font-sans">
+        <div className="min-h-screen bg-gradient-to-br from-sky-100 to-sky-200 text-gray-800 font-sans">        
         <header className="container mx-auto py-6 px-4">
             <nav className="flex justify-between items-center">
-            <Link href="/" className="text-4xl font-extrabold tracking-tight">
-                SoccerBrand
+            <Link href="/" className="text-4xl font-extrabold tracking-tight text-gray-800">
+                ConklinOfficial
             </Link>
-            <Link href="/" className="text-lg hover:text-yellow-300 transition-colors">
+            <Link href="/" className="text-lg hover:text-gray-600 transition-colors">
                 Back to Home
             </Link>
             </nav>

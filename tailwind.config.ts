@@ -11,9 +11,11 @@ const config: Config = {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      colors: {
+        'sky': {
+          100: '#e0f2fe',
+          200: '#bae6fd',
+        },
       },
     },
   },
