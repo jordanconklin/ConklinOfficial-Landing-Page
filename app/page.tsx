@@ -1,17 +1,27 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import ContactForm from './components/ContactForm'
+import LoginForm from './components/LoginForm'
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-200 to-sky-300 text-gray-800 font-sans">
       <header className="container mx-auto py-6 px-4">
         <nav className="flex justify-between items-center">
-          <h1 className="text-4xl font-extrabold">ConklinOfficial</h1>
+          <Link href="/" className="flex items-center">
+            <Image 
+              src="/brand_logo.png" 
+              alt="ConklinOfficial Logo" 
+              width={70} 
+              height={25} 
+              className="object-contain"
+            />
+          </Link>
           <ul className="flex space-x-8">
             <li><a href="#" className="hover:text-gray-600 transition-colors text-lg">Home</a></li>
             <li><a href="#products" className="hover:text-gray-600 transition-colors text-lg">Products</a></li>
             <li><a href="#contact" className="hover:text-gray-600 transition-colors text-lg">Contact</a></li>
+            <li><Link href="/login" className="hover:text-gray-600 transition-colors text-lg">Login</Link></li>
             <li><a href="#" className="text-2xl">🛒</a></li>
           </ul>
         </nav>
