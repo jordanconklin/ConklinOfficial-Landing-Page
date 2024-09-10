@@ -9,6 +9,7 @@ export default function LoginForm() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      console.log('Attempting login...');
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
@@ -17,13 +18,16 @@ export default function LoginForm() {
         body: JSON.stringify({ email, password }),
       });
 
+      console.log('Login response status:', response.status);
+      const data = await response.json();
+      console.log('Login response data:', data);
+
       if (response.ok) {
-        const data = await response.json();
         localStorage.setItem('token', data.access_token);
-        console.log('Login successful');
-        window.location.href = '/'; // Redirect to the home page
+        console.log('Login successful, redirecting...');
+        window.location.href = '/';
       } else {
-        console.error('Login failed');
+        console.error('Login failed:', data.error);
         // You might want to show an error message to the user here
       }
     } catch (error) {

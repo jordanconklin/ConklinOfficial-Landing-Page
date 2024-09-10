@@ -10,27 +10,34 @@ export default function LoginPage() {
     const router = useRouter();
   
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      try {
-        const response = await fetch('/api/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
-        });
-  
-        if (response.ok) {
+        e.preventDefault();
+        console.log('Login form submitted');
+        try {
+          console.log('Sending login request to /api/login');
+          const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+          });
+      
+          console.log('Login response status:', response.status);
           const data = await response.json();
-          localStorage.setItem('token', data.access_token);
-          console.log('Login successful');
-          router.push('/');
-        } else {
-          console.error('Login failed');
+          console.log('Login response data:', data);
+      
+          if (response.ok) {
+            localStorage.setItem('token', data.access_token);
+            console.log('Login successful, redirecting...');
+            router.push('/');
+          } else {
+            console.error('Login failed:', data.error);
+            // You might want to show an error message to the user here
+          }
+        } catch (error) {
+          console.error('Error during login:', error);
+          // You might want to show an error message to the user here
         }
-      } catch (error) {
-        console.error('Error during login:', error);
-      }
     };
 
     return (

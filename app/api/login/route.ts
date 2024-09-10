@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-  const { email, password } = await request.json();
-
+  console.log('API route hit: /api/login');
   try {
+    const { email, password } = await request.json();
+    console.log('Login attempt for email:', email);
+
     const response = await fetch('http://127.0.0.1:8000/login/', {
       method: 'POST',
       headers: {
@@ -12,10 +14,15 @@ export async function POST(request: Request) {
       body: JSON.stringify({ email, password }),
     });
 
+    console.log('Backend response status:', response.status);
+    const data = await response.json();
+    console.log('Backend response data:', data);
+
     if (response.ok) {
-      const data = await response.json();
+      console.log('Login successful');
       return NextResponse.json(data);
     } else {
+      console.error('Login failed:', data.error);
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
   } catch (error) {
