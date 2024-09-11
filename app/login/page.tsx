@@ -27,7 +27,7 @@ export default function LoginPage() {
           console.log('Login response data:', data);
       
           if (response.ok) {
-            localStorage.setItem('token', data.access_token);
+            document.cookie = `token=${data.access_token}; path=/; max-age=86400; samesite=strict; secure`;
             console.log('Login successful, redirecting...');
             router.push('/');
           } else {
@@ -79,7 +79,7 @@ export default function LoginPage() {
             </button>
             </form>
             <p className="mt-4 text-center">
-            Don't have an account? <Link href="/register" className="text-blue-500 hover:underline">Register</Link>
+              Don&apos;t have an account? <Link href="/register" className="text-blue-500 hover:underline">Register</Link>
             </p>
         </div>
         </div>
