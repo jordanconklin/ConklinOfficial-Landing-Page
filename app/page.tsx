@@ -28,7 +28,7 @@ export default function Home() {
   
   const products = [
     { name: 'ConklinOfficial Quarter Zip Pullover', price: '$65.00', image: '/quarter-zip.jpg' },
-    { name: 'ConklinOfficial Fleece Hoodie', price: '$26.00', image: '/fleece-hoodie.jpg' },
+    { name: 'ConklinOfficial Midweight Hoodie', price: '$26.00', image: '/midweight-hoodie.jpg' },
     { name: 'ConklinOfficial Champion T-Shirt', price: '$25.00', image: '/champion-tshirt.jpg' },
     { name: 'ConklinOfficial Classic T-Shirt', price: '$16.00', image: '/classic-tshirt.jpg' },
   ];
@@ -87,7 +87,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* <section id="products" className="py-24 bg-gray-100">
+        <section id="products" className="py-24 bg-gray-100">
           <div className="container mx-auto px-4">
             <h2 className="text-4xl font-bold text-center mb-2">Featured Products</h2>
             <div className="w-24 h-1 bg-red-500 mx-auto mb-12"></div>
@@ -101,9 +101,9 @@ export default function Home() {
                   </div>
                 </div>
               ))}
-            </div>
+            </div> 
           </div>
-        </section> */}
+        </section>
 
         <section id="contact" className="py-24 bg-gradient-to-br from-sky-100 to-sky-200">
           <div className="container mx-auto px-4">

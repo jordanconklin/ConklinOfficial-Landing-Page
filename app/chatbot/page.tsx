@@ -7,18 +7,64 @@ export default function Chatbot() {
     const [messages, setMessages] = useState([{ text: 'Welcome to TekkAI!', sender: 'bot' }]);
     const [sessionId, setSessionId] = useState('');
 
+    useEffect(() => {
+        const fetchNewSession = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/conversations/new/', { 
+                    method: 'POST',
+                    redirect: 'follow'
+                  });
+                const data = await response.json();
+                setSessionId(data.session_id);
+            } catch (error) {
+                console.error('Error creating new session:', error);
+            }
+        };
+
+        fetchNewSession();
+    }, []);
+
     // this is the function that will be called when the user submits a message, for now it just logs the message to the console
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (message.trim()) {
             setMessages([...messages, { text: message, sender: 'user' }]);
             setMessage('');
-            // Here you would typically send the message to your AI backend
-            // and then add the AI's response to the messages
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/generate_tutorial/', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
+                    body: JSON.stringify({
+                      prompt: message,
+                      session_id: sessionId,
+                    }),
+                  });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setMessages(prevMessages => [...prevMessages, { text: data.tutorial, sender: 'bot' }]);
+                } else {
+                    const errorData = await response.json();
+                    console.error('Error from backend:', errorData.error);
+                    setMessages(prevMessages => [...prevMessages, { text: 'Sorry, I encountered an error. Please try again.', sender: 'bot' }]);
+                }
+            } catch (error) {
+                console.error('Error sending message to backend:', error);
+                setMessages(prevMessages => [...prevMessages, { text: 'Sorry, I encountered an error. Please try again.', sender: 'bot' }]);
+            }
+
+            // Scroll to the bottom of the chat container
+            setTimeout(() => {
+                const chatContainer = document.getElementById('chat-messages');
+                if (chatContainer) {
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }
+            }, 0);
         }
-        // Handle the form submission logic here
-        console.log('Submitted message:', message);
-        setMessage('');
     };
 
     return (
@@ -36,8 +82,8 @@ export default function Chatbot() {
 
             <main className="container mx-auto px-4 py-12">
                 <h1 className="text-5xl font-bold mb-12 text-center">Chat with TekkAI</h1>
-                <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden">
-                    <div className="h-96 bg-gray-100 p-6 overflow-y-auto" id="chat-messages">
+                <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col h-[600px]">
+                    <div className="flex-grow bg-gray-100 p-6 overflow-y-auto flex flex-col-reverse" id="chat-messages">
                         {messages.map((msg, index) => (
                             <div key={index} className={`mb-4 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
                                 <span className={`inline-block p-2 rounded-lg ${msg.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'}`}>

@@ -27,7 +27,8 @@ export default function LoginPage() {
           console.log('Login response data:', data);
       
           if (response.ok) {
-            document.cookie = `token=${data.access_token}; path=/; max-age=86400; samesite=strict; secure`;
+            // change local storage to cookies
+            localStorage.setItem('token', data.access_token);
             console.log('Login successful, redirecting...');
             router.push('/');
           } else {
