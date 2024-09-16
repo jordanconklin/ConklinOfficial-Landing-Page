@@ -11,7 +11,19 @@ export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const response = await fetch('/api/check-auth');
+      const data = await response.json();
+      setIsLoggedIn(data.isLoggedIn);
+    };
+    checkLoginStatus();
+  }, []);
+
+  console.log("Home page loaded")
+
   const handleLogout = async () => {
+    console.log("Attempting logging out...")
     try {
       const response = await fetch('/api/logout', { method: 'POST' });
       if (response.ok) {
@@ -32,11 +44,6 @@ export default function Home() {
     { name: 'ConklinOfficial Champion T-Shirt', price: '$25.00', image: '/champion-tshirt.jpg' },
     { name: 'ConklinOfficial Classic T-Shirt', price: '$16.00', image: '/classic-tshirt.jpg' },
   ];
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
-  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-200 to-sky-300 text-gray-800 font-sans">

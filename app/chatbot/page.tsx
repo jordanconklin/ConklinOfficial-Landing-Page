@@ -7,6 +7,8 @@ export default function Chatbot() {
     const [messages, setMessages] = useState([{ text: 'Welcome to TekkAI!', sender: 'bot' }]);
     const [sessionId, setSessionId] = useState('');
 
+    console.log("Chatbot loaded")
+    
     useEffect(() => {
         const fetchNewSession = async () => {
             try {

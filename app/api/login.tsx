@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-export async function POST(request: Request) {
+export const POST = async (request: Request) => {
   console.log('API route hit: /api/login');
   try {
     const { email, password } = await request.json();
@@ -20,7 +20,15 @@ export async function POST(request: Request) {
 
     if (response.ok) {
       console.log('Login successful');
-      return NextResponse.json(data);
+      const nextResponse = NextResponse.json({ message: 'Login successful' });
+      nextResponse.cookies.set('token', data.access_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 3600, // 1 hour
+        path: '/',
+      });
+      return nextResponse;
     } else {
       console.error('Login failed:', data.error);
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });

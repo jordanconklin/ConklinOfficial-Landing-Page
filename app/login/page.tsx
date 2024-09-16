@@ -7,37 +7,40 @@ import { useRouter } from 'next/navigation';
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const router = useRouter();
-  
+
+    console.log("Logging in...")
+    
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Login form submitted');
+        setError(''); // Clear any previous errors
         try {
-          console.log('Sending login request to /api/login');
-          const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-          });
-      
-          console.log('Login response status:', response.status);
-          const data = await response.json();
-          console.log('Login response data:', data);
-      
-          if (response.ok) {
-            // change local storage to cookies
-            localStorage.setItem('token', data.access_token);
-            console.log('Login successful, redirecting...');
-            router.push('/');
-          } else {
-            console.error('Login failed:', data.error);
-            // You might want to show an error message to the user here
-          }
+            console.log('Sending login request to /api/login');
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+        
+            console.log('Login response status:', response.status);
+            const data = await response.json();
+            console.log('Login response data:', data);
+        
+            if (response.ok) {
+                // localStorage.setItem('token', data.access_token);
+                console.log('Login successful, redirecting...');
+                router.push('/');
+            } else {
+                console.error('Login failed:', data.error);
+                setError(data.error || 'Login failed. Please try again.');
+            }
         } catch (error) {
-          console.error('Error during login:', error);
-          // You might want to show an error message to the user here
+            console.error('Error during login:', error);
+            setError('An unexpected error occurred. Please try again.');
         }
     };
 
@@ -46,6 +49,7 @@ export default function LoginPage() {
         <div className="bg-white p-8 rounded-lg shadow-md w-96">
             <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
             <form onSubmit={handleSubmit}>
+            {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
             <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
                 Email
