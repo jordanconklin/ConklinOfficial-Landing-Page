@@ -9,6 +9,12 @@ interface Conversation {
     title: string;
 }
 
+// Message interface when fetching a conversation
+interface Message {
+    content: string;
+    role: string;
+}
+
 export default function Chatbot() {
     // ***** STATE *****
     const [message, setMessage] = useState('');
@@ -122,7 +128,7 @@ export default function Chatbot() {
             setCurrentConversation(data);
             setMessages([
                 { text: 'Welcome to TekkAI!', sender: 'bot' },
-                ...data.messages.map(msg => ({ text: msg.content, sender: msg.role }))
+                ...data.messages.map((msg: Message) => ({ text: msg.content, sender: msg.role }))
             ]);
             setSessionId(sessionId);
             } else {
