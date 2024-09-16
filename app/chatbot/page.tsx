@@ -84,7 +84,7 @@ export default function Chatbot() {
     const scrollToBottom = () => {
         const chatContainer = document.getElementById('chat-messages');
         if (chatContainer) {
-            chatContainer.scrollTop = 0;
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
     };
 
@@ -115,8 +115,20 @@ export default function Chatbot() {
                         <div>
                             {messages.map((msg, index) => (
                                 <div key={index} className={`mb-4 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
-                                    <span className={`inline-block p-2 rounded-lg ${msg.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'}`}>
-                                        {msg.text}
+                                    <span className={`inline-block p-3 rounded-lg ${msg.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'}`}>
+                                        {msg.sender === 'bot' ? (
+                                            <div className="whitespace-pre-wrap">
+                                                {msg.text.split('\n').map((line, i) => (
+                                                    <p key={i}>
+                                                        {line.split('**').map((part, j) => (
+                                                            j % 2 === 0 ? part : <strong key={j}>{part}</strong>
+                                                        ))}
+                                                    </p>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            msg.text
+                                        )}
                                     </span>
                                 </div>
                             ))}
