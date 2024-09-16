@@ -11,20 +11,26 @@ export default function Chatbot() {
     
     useEffect(() => {
         const fetchNewSession = async () => {
-            try {
-                const response = await fetch('http://127.0.0.1:8000/conversations/new/', { 
-                    method: 'POST',
-                    redirect: 'follow'
-                  });
-                const data = await response.json();
-                setSessionId(data.session_id);
-            } catch (error) {
-                console.error('Error creating new session:', error);
+          try {
+            const response = await fetch('/api/conversations', { 
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+            if (response.ok) {
+              const data = await response.json();
+              setSessionId(data.session_id);
+            } else {
+              console.error('Failed to create new session');
             }
+          } catch (error) {
+            console.error('Error creating new session:', error);
+          }
         };
-
+      
         fetchNewSession();
-    }, []);
+      }, []);
 
     // this is the function that will be called when the user submits a message, for now it just logs the message to the console
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -34,11 +40,10 @@ export default function Chatbot() {
             setMessage('');
 
             try {
-                const response = await fetch('http://127.0.0.1:8000/generate_tutorial/', {
+                const response = await fetch('/api/generate_tutorial', {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',
-                      'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     },
                     body: JSON.stringify({
                       prompt: message,

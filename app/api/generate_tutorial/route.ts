@@ -1,13 +1,22 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
 export async function POST(request: Request) {
   try {
+    const cookieStore = cookies();
+    const token = cookieStore.get('token')?.value;
+
+    if (!token) {
+      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+    }
+
     const { prompt, session_id } = await request.json();
 
     const response = await fetch('http://127.0.0.1:8000/generate_tutorial/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({ prompt, session_id }),
     });
