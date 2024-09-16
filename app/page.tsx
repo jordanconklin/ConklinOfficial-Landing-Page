@@ -8,9 +8,19 @@ import { useRouter } from 'next/navigation';
 
 
 export default function Home() {
+  // ***** STATE *****
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
+  const products = [
+    { name: 'ConklinOfficial Quarter Zip Pullover', price: '$65.00', image: '/quarter-zip.jpg' },
+    { name: 'ConklinOfficial Midweight Hoodie', price: '$26.00', image: '/midweight-hoodie.jpg' },
+    { name: 'ConklinOfficial Champion T-Shirt', price: '$25.00', image: '/champion-tshirt.jpg' },
+    { name: 'ConklinOfficial Classic T-Shirt', price: '$16.00', image: '/classic-tshirt.jpg' },
+  ];
+
+  // ***** REACT HOOKS *****
+  // Hook to check if the user is logged in
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
@@ -27,6 +37,8 @@ export default function Home() {
 
   console.log("Home page loaded")
 
+  // ***** FUNCTIONS *****
+  // Function to handle logging out
   const handleLogout = async () => {
     console.log("Attempting logging out...")
     try {
@@ -42,14 +54,8 @@ export default function Home() {
       console.error('Error during logout:', error);
     }
   };
-  
-  const products = [
-    { name: 'ConklinOfficial Quarter Zip Pullover', price: '$65.00', image: '/quarter-zip.jpg' },
-    { name: 'ConklinOfficial Midweight Hoodie', price: '$26.00', image: '/midweight-hoodie.jpg' },
-    { name: 'ConklinOfficial Champion T-Shirt', price: '$25.00', image: '/champion-tshirt.jpg' },
-    { name: 'ConklinOfficial Classic T-Shirt', price: '$16.00', image: '/classic-tshirt.jpg' },
-  ];
 
+  // ***** RETURN *****
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-200 to-sky-300 text-gray-800 font-sans">
       <header className="container mx-auto py-6 px-4">

@@ -1,14 +1,18 @@
 'use client';
 import { useState, FormEvent, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Chatbot() {
+    // ***** STATE *****
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([{ text: 'Welcome to TekkAI!', sender: 'bot' }]);
     const [sessionId, setSessionId] = useState('');
 
     console.log("Chatbot loaded")
     
+    // ***** REACT HOOKS *****
+    // Hook for creating a new session
     useEffect(() => {
         const fetchNewSession = async () => {
           try {
@@ -32,11 +36,17 @@ export default function Chatbot() {
         fetchNewSession();
       }, []);
 
-    // this is the function that will be called when the user submits a message, for now it just logs the message to the console
+    // Hook for scrolling to the bottom of the chat container
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+
+    // ***** FUNCTIONS *****
+    // Function for handling the form submission when user sends a message
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (message.trim()) {
-            setMessages([...messages, { text: message, sender: 'user' }]);
+            setMessages(prevMessages => [...prevMessages, { text: message, sender: 'user' }]);
             setMessage('');
 
             try {
@@ -44,6 +54,7 @@ export default function Chatbot() {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',
+                      'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     },
                     body: JSON.stringify({
                       prompt: message,
@@ -65,21 +76,31 @@ export default function Chatbot() {
             }
 
             // Scroll to the bottom of the chat container
-            setTimeout(() => {
-                const chatContainer = document.getElementById('chat-messages');
-                if (chatContainer) {
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
-                }
-            }, 0);
+            setTimeout(scrollToBottom, 0);
         }
     };
 
+    // Function for scrolling to the bottom of the chat container
+    const scrollToBottom = () => {
+        const chatContainer = document.getElementById('chat-messages');
+        if (chatContainer) {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    };
+
+    // ***** RETURN *****
     return (
-        <div className="min-h-screen bg-gradient-to-br from-sky-100 to-sky-200 text-gray-800 font-sans">        
+        <div className="min-h-screen bg-gradient-to-br from-sky-200 to-sky-300 text-gray-800 font-sans">
             <header className="container mx-auto py-6 px-4">
                 <nav className="flex justify-between items-center">
-                    <Link href="/" className="text-4xl font-extrabold tracking-tight text-gray-800">
-                        ConklinOfficial
+                    <Link href="/" className="flex items-center">
+                        <Image
+                            src="/brand_logo_black.png"
+                            alt="ConklinOfficial Logo"
+                            width={70}
+                            height={25}
+                            className="object-contain"
+                        />
                     </Link>
                     <Link href="/" className="text-lg hover:text-gray-600 transition-colors">
                         Back to Home
@@ -90,7 +111,7 @@ export default function Chatbot() {
             <main className="container mx-auto px-4 py-12">
                 <h1 className="text-5xl font-bold mb-12 text-center">Chat with TekkAI</h1>
                 <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col h-[600px]">
-                    <div className="flex-grow bg-gray-100 p-6 overflow-y-auto flex flex-col-reverse" id="chat-messages">
+                    <div className="flex-grow bg-gray-100 p-6 overflow-y-auto flex flex-col" id="chat-messages">
                         {messages.map((msg, index) => (
                             <div key={index} className={`mb-4 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
                                 <span className={`inline-block p-2 rounded-lg ${msg.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'}`}>

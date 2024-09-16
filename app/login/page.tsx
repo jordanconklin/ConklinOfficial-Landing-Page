@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+    // ***** STATE *****
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -12,6 +13,8 @@ export default function LoginPage() {
 
     console.log("Logging in...")
     
+    // ***** FUNCTIONS *****
+    // Function to handle form submission when user logs in
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('Login form submitted');
@@ -44,6 +47,7 @@ export default function LoginPage() {
         }
     };
 
+    // ***** RETURN *****
     return (
         <div className="min-h-screen bg-gradient-to-br from-sky-200 to-sky-300 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-md w-96">

@@ -3,11 +3,14 @@
 import React, { FormEvent } from 'react';
 
 export default function ContactForm() {
+  
+  // ***** FUNCTIONS *****
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle form submission logic here
   };
 
+  // ***** RETURN *****
   return (
     <form onSubmit={handleSubmit} className="max-w-lg mx-auto bg-white rounded-lg shadow-xl p-8">
       <div className="mb-6">
