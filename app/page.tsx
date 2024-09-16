@@ -13,9 +13,14 @@ export default function Home() {
 
   useEffect(() => {
     const checkLoginStatus = async () => {
-      const response = await fetch('/api/check-auth');
-      const data = await response.json();
-      setIsLoggedIn(data.isLoggedIn);
+      try {
+        const response = await fetch('/api/check-auth');
+        const data = await response.json();
+        setIsLoggedIn(data.isLoggedIn);
+      } catch (error) {
+        console.error('Error checking login status:', error);
+        setIsLoggedIn(false);
+      }
     };
     checkLoginStatus();
   }, []);

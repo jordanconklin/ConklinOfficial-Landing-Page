@@ -16,7 +16,12 @@ export default function ContactForm() {
       </div>
       <div className="mb-6">
         <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">Your Email</label>
-        <input type="email" id="email" placeholder="john@example.com" className="w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent" />
+        <input
+          type="text"
+          id="name"
+          placeholder="John Doe"
+          className="w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+        />
       </div>
       <div className="mb-6">
         <label htmlFor="message" className="block text-gray-700 text-sm font-bold mb-2">Your Message</label>
