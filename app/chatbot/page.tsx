@@ -120,6 +120,7 @@ export default function Chatbot() {
         }
       };
 
+    // Function for loading a specific conversation based on a session ID
     const loadConversation = async (sessionId: string) => {
         try {
             const response = await fetch(`/api/conversations/${sessionId}`);
@@ -136,6 +137,28 @@ export default function Chatbot() {
             }
         } catch (error) {
             console.error('Error loading conversation:', error);
+        }
+    };
+
+    // Function for starting a new conversation
+    const startNewConversation = async () => {
+        try {
+          const response = await fetch('/api/conversations', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          if (response.ok) {
+            const data = await response.json();
+            setSessionId(data.session_id);
+            setMessages([{ text: 'Welcome to TekkAI!', sender: 'bot' }]);
+            setCurrentConversation(null);
+          } else {
+            console.error('Failed to create new conversation');
+          }
+        } catch (error) {
+          console.error('Error creating new conversation:', error);
         }
     };
 
@@ -178,6 +201,15 @@ export default function Chatbot() {
                         </ul>
                     </div>
                     <div className="flex-1 flex flex-col">
+                        <div className="flex justify-between items-center mb-4">
+                            <h2 className=""></h2>
+                            <button
+                                onClick={startNewConversation}
+                                className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                            >
+                                Start New Conversation
+                            </button>
+                        </div>
                         <div className="flex-grow bg-white p-6 overflow-y-auto flex flex-col" id="chat-messages">
                             <div className="mb-4">
                                 <span className="inline-block p-3 rounded-lg bg-gray-300 text-gray-800">
