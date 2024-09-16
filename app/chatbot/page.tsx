@@ -84,7 +84,7 @@ export default function Chatbot() {
     const scrollToBottom = () => {
         const chatContainer = document.getElementById('chat-messages');
         if (chatContainer) {
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            chatContainer.scrollTop = 0;
         }
     };
 
@@ -111,14 +111,16 @@ export default function Chatbot() {
             <main className="container mx-auto px-4 py-12">
                 <h1 className="text-5xl font-bold mb-12 text-center">Chat with TekkAI</h1>
                 <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col h-[600px]">
-                    <div className="flex-grow bg-gray-100 p-6 overflow-y-auto flex flex-col" id="chat-messages">
-                        {messages.map((msg, index) => (
-                            <div key={index} className={`mb-4 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
-                                <span className={`inline-block p-2 rounded-lg ${msg.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'}`}>
-                                    {msg.text}
-                                </span>
-                            </div>
-                        ))}
+                    <div className="flex-grow bg-gray-100 p-6 overflow-y-auto flex flex-col-reverse" id="chat-messages">
+                        <div>
+                            {messages.map((msg, index) => (
+                                <div key={index} className={`mb-4 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
+                                    <span className={`inline-block p-2 rounded-lg ${msg.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'}`}>
+                                        {msg.text}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                     <div className="p-4 bg-gray-200">
                         <form className="flex" onSubmit={handleSubmit}>
