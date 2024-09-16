@@ -3,17 +3,26 @@ import { useState, FormEvent, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
+// Conversation interface when fetching previous conversations
+interface Conversation {
+    id: string;
+    title: string;
+}
+
 export default function Chatbot() {
     // ***** STATE *****
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([{ text: 'Welcome to TekkAI!', sender: 'bot' }]);
     const [sessionId, setSessionId] = useState('');
+    const [previousConversations, setPreviousConversations] = useState<Conversation[]>([]);    
+    const [currentConversation, setCurrentConversation] = useState(null);
 
     console.log("Chatbot loaded")
     
     // ***** REACT HOOKS *****
     // Hook for creating a new session
     useEffect(() => {
+        fetchPreviousConversations();
         const fetchNewSession = async () => {
           try {
             const response = await fetch('/api/conversations', { 
@@ -33,8 +42,10 @@ export default function Chatbot() {
           }
         };
       
-        fetchNewSession();
-      }, []);
+        if (!currentConversation) {
+          fetchNewSession();
+        }
+      }, [currentConversation]);
 
     // Hook for scrolling to the bottom of the chat container
     useEffect(() => {
@@ -88,6 +99,40 @@ export default function Chatbot() {
         }
     };
 
+    // Function for fetching previous conversations to display in the chat history dropdown
+    const fetchPreviousConversations = async () => {
+        try {
+          const response = await fetch('/api/get_previous_conversations');
+          if (response.ok) {
+            const data = await response.json();
+            setPreviousConversations(data.conversations);
+          } else {
+            console.error('Failed to fetch previous conversations');
+          }
+        } catch (error) {
+          console.error('Error fetching previous conversations:', error);
+        }
+      };
+
+    const loadConversation = async (sessionId: string) => {
+        try {
+            const response = await fetch(`/api/conversations/${sessionId}`);
+            if (response.ok) {
+            const data = await response.json();
+            setCurrentConversation(data);
+            setMessages([
+                { text: 'Welcome to TekkAI!', sender: 'bot' },
+                ...data.messages.map(msg => ({ text: msg.content, sender: msg.role }))
+            ]);
+            setSessionId(sessionId);
+            } else {
+            console.error('Failed to load conversation');
+            }
+        } catch (error) {
+            console.error('Error loading conversation:', error);
+        }
+    };
+
     // ***** RETURN *****
     return (
         <div className="min-h-screen bg-gradient-to-br from-sky-200 to-sky-300 text-gray-800 font-sans">
@@ -110,10 +155,30 @@ export default function Chatbot() {
 
             <main className="container mx-auto px-4 py-12">
                 <h1 className="text-5xl font-bold mb-12 text-center">Chat with TekkAI</h1>
-                <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col h-[600px]">
-                    <div className="flex-grow bg-gray-100 p-6 overflow-y-auto flex flex-col-reverse" id="chat-messages">
-                        <div>
-                            {messages.map((msg, index) => (
+                <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden flex h-[600px]">
+                    <div className="w-1/4 bg-gray-100 p-4 overflow-y-auto">
+                        <h2 className="text-xl font-bold mb-4">Previous Chats</h2>
+                        <ul>
+                            {previousConversations.map((conv) => (
+                                <li key={conv.id} className="mb-2">
+                                    <button
+                                        onClick={() => loadConversation(conv.id)}
+                                        className="text-left w-full hover:bg-gray-200 p-2 rounded text-sm"
+                                    >
+                                        {conv.title}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="flex-1 flex flex-col">
+                        <div className="flex-grow bg-white p-6 overflow-y-auto flex flex-col" id="chat-messages">
+                            <div className="mb-4">
+                                <span className="inline-block p-3 rounded-lg bg-gray-300 text-gray-800">
+                                    Welcome to TekkAI!
+                                </span>
+                            </div>
+                            {messages.slice(1).map((msg, index) => (
                                 <div key={index} className={`mb-4 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
                                     <span className={`inline-block p-3 rounded-lg ${msg.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'}`}>
                                         {msg.sender === 'bot' ? (
@@ -133,25 +198,25 @@ export default function Chatbot() {
                                 </div>
                             ))}
                         </div>
-                    </div>
-                    <div className="p-4 bg-gray-200">
-                        <form className="flex" onSubmit={handleSubmit}>
-                            <input
-                                type="text"
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                                placeholder="Type your message..."
-                                className="flex-grow px-4 py-2 rounded-l-lg focus:outline-none text-gray-800"
-                                aria-label="Chat message input"
-                            />
-                            <button
-                                type="submit"
-                                className="bg-yellow-500 text-white px-6 py-2 rounded-r-lg hover:bg-yellow-600 transition-colors font-semibold"
-                                aria-label="Send message"
-                            >
-                                Send
-                            </button>
-                        </form>
+                        <div className="p-4 bg-gray-200">
+                            <form className="flex" onSubmit={handleSubmit}>
+                                <input
+                                    type="text"
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                    placeholder="Type your message..."
+                                    className="flex-grow px-4 py-2 rounded-l-lg focus:outline-none text-gray-800"
+                                    aria-label="Chat message input"
+                                />
+                                <button
+                                    type="submit"
+                                    className="bg-yellow-500 text-white px-6 py-2 rounded-r-lg hover:bg-yellow-600 transition-colors font-semibold"
+                                    aria-label="Send message"
+                                >
+                                    Send
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </main>
