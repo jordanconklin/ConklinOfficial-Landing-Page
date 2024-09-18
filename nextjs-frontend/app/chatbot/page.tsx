@@ -219,23 +219,19 @@ export default function Chatbot() {
                             {messages.slice(1).map((msg, index) => (
                                 <div key={index} className={`mb-4 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
                                     <span className={`inline-block p-3 rounded-lg ${msg.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'}`}>
-                                        {msg.sender === 'bot' ? (
-                                            <div className="whitespace-pre-wrap">
-                                                {msg.text.split('\n').map((line, i) => (
-                                                    <p key={i} className="mb-2">
-                                                        {line.split(/(\*\*[^*]+\*\*)/).map((part, j) => (
-                                                            part.startsWith('**') && part.endsWith('**') ? (
-                                                                <strong key={j}>{part.slice(2, -2)}</strong>
-                                                            ) : (
-                                                                <span key={j}>{part}</span>
-                                                            )
-                                                        ))}
-                                                    </p>
-                                                ))}
-                                            </div>
-                                        ) : (
-                                            msg.text
-                                        )}
+                                        <div className="whitespace-pre-wrap">
+                                            {msg.text.split('\n').map((line, i) => (
+                                                <p key={i} className="mb-2">
+                                                    {line.split(/(\*\*[^*]+\*\*)/).map((part, j) => (
+                                                        part.startsWith('**') && part.endsWith('**') ? (
+                                                            <strong key={j}>{part.slice(2, -2)}</strong>
+                                                        ) : (
+                                                            <span key={j}>{part}</span>
+                                                        )
+                                                    ))}
+                                                </p>
+                                            ))}
+                                        </div>
                                     </span>
                                 </div>
                             ))}
