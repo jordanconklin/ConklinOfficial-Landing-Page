@@ -5,18 +5,30 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ContactForm from './components/ContactForm';
 import { useRouter } from 'next/navigation';
+import ProductList from './components/ProductList';
 
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+}
+
+interface CartItem extends Product {
+  quantity: number;
+}
 
 export default function Home() {
   // ***** STATE *****
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-  const products = [
-    { name: 'ConklinOfficial Quarter Zip Pullover', price: '$65.00', image: '/quarter-zip.jpg' },
-    { name: 'ConklinOfficial Midweight Hoodie', price: '$26.00', image: '/midweight-hoodie.jpg' },
-    { name: 'ConklinOfficial Champion T-Shirt', price: '$25.00', image: '/champion-tshirt.jpg' },
-    { name: 'ConklinOfficial Classic T-Shirt', price: '$16.00', image: '/classic-tshirt.jpg' },
+  const products: Product[] = [
+    { id: '1', name: 'ConklinOfficial Quarter Zip Pullover', price: 65.00, image: '/quarter-zip.jpg' },
+    { id: '2', name: 'ConklinOfficial Midweight Hoodie', price: 26.00, image: '/midweight-hoodie.jpg' },
+    { id: '3', name: 'ConklinOfficial Champion T-Shirt', price: 25.00, image: '/champion-tshirt.jpg' },
+    { id: '4', name: 'ConklinOfficial Classic T-Shirt', price: 16.00, image: '/classic-tshirt.jpg' },
   ];
 
   // ***** REACT HOOKS *****
@@ -55,6 +67,32 @@ export default function Home() {
     }
   };
 
+  const addToCart = (product: Product) => {
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find((item) => item.id === product.id);
+      let newItems;
+      if (existingItem) {
+        newItems = prevItems.map((item) =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      } else {
+        newItems = [...prevItems, { ...product, quantity: 1 }];
+      }
+      localStorage.setItem('cart', JSON.stringify(newItems));
+      return newItems;
+    });
+  };
+
+  const removeFromCart = (id: string) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
+
+  const updateQuantity = (id: string, quantity: number) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) => (item.id === id ? { ...item, quantity } : item))
+    );
+  };
+
   // ***** RETURN *****
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-200 to-sky-300 text-gray-800 font-sans">
@@ -78,7 +116,16 @@ export default function Home() {
             ) : (
               <li><Link href="/login" className="hover:text-gray-600 transition-colors text-lg">Login</Link></li>
             )}
-            <li><a href="#" className="text-2xl">🛒</a></li>
+            <li>
+              <Link href="/cart" className="text-2xl">
+                🛒
+                {cartItems.length > 0 && (
+                  <span className="bg-red-500 text-white rounded-full px-2 py-1 text-xs absolute -mt-2 -mr-2">
+                    {cartItems.length}
+                  </span>
+                )}
+              </Link>
+            </li>
           </ul>
         </nav>
       </header>
@@ -109,17 +156,7 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <h2 className="text-4xl font-bold text-center mb-2">Featured Products</h2>
             <div className="w-24 h-1 bg-red-500 mx-auto mb-12"></div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              {products.map((product, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
-                  <Image src={product.image} alt={product.name} width={300} height={300} className="w-full h-64 object-cover" />
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-                    <p className="text-gray-600">{product.price}</p>
-                  </div>
-                </div>
-              ))}
-            </div> 
+            <ProductList products={products} addToCart={addToCart} />
           </div>
         </section>
 
