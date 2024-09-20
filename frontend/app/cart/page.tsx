@@ -5,8 +5,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Cart from '../components/Cart';
 
+interface CartItem {
+  id: string;
+  quantity: number;
+  name: string;
+  price: number;
+  // Add other properties as needed
+}
+
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   useEffect(() => {
     // Load cart items from localStorage
@@ -17,7 +25,7 @@ export default function CartPage() {
   }, []);
 
   const removeFromCart = (id: string) => {
-    setCartItems((prevItems) => {
+    setCartItems((prevItems: CartItem[]) => {
       const newItems = prevItems.filter((item) => item.id !== id);
       localStorage.setItem('cart', JSON.stringify(newItems));
       return newItems;
