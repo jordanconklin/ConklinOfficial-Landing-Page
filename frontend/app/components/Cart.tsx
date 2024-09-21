@@ -1,10 +1,12 @@
 import React from 'react';
+import Image from 'next/image';
 
 interface CartItem {
   id: string;
   name: string;
   price: number;
   quantity: number;
+  image: string;
 }
 
 interface CartProps {
@@ -24,8 +26,15 @@ const Cart: React.FC<CartProps> = ({ items, removeFromCart, updateQuantity }) =>
       ) : (
         <>
           {items.map((item) => (
-            <div key={item.id} className="flex justify-between items-center mb-4">
-              <div>
+            <div key={item.id} className="flex items-center mb-4 border-b pb-4">
+              <Image
+                src={item.image}
+                alt={item.name}
+                width={80}
+                height={80}
+                className="object-cover rounded-md mr-4"
+              />
+              <div className="flex-grow">
                 <h3 className="font-semibold">{item.name}</h3>
                 <p className="text-gray-600">${item.price.toFixed(2)}</p>
               </div>

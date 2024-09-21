@@ -1,96 +1,94 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
-import Link from 'next/link';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 
-export default function LoginPage() {
-    // ***** STATE *****
+export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
 
-    console.log("Logging in...")
-    
-    // ***** FUNCTIONS *****
-    // Function to handle form submission when user logs in
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Login form submitted');
-        setError(''); // Clear any previous errors
+        setError('');
         try {
-            console.log('Sending login request to /api/login');
             const response = await fetch('/api/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
             });
-        
-            console.log('Login response status:', response.status);
-            const data = await response.json();
-            console.log('Login response data:', data);
-        
             if (response.ok) {
-                // localStorage.setItem('token', data.access_token);
-                console.log('Login successful, redirecting...');
-                router.push('/');
+                router.push('/'); // Redirect to home page after successful login
             } else {
-                console.error('Login failed:', data.error);
-                setError(data.error || 'Login failed. Please try again.');
+                const data = await response.json();
+                setError(data.message || 'Login failed');
             }
         } catch (error) {
-            console.error('Error during login:', error);
-            setError('An unexpected error occurred. Please try again.');
+            setError('An error occurred. Please try again.');
         }
     };
 
-    // ***** RETURN *****
     return (
-        <div className="min-h-screen bg-gradient-to-br from-sky-200 to-sky-300 flex items-center justify-center">
-        <div className="bg-white p-8 rounded-lg shadow-md w-96">
-            <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
-            <form onSubmit={handleSubmit}>
-            {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-            <div className="mb-4">
-                <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
-                Email
-                </label>
-                <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-                required
-                />
-            </div>
-            <div className="mb-6">
-                <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
-                Password
-                </label>
-                <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-                required
-                />
-            </div>
-            <button
-                type="submit"
-                className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-300"
-            >
-                Log In
-            </button>
-            </form>
-            <p className="mt-4 text-center">
-              Don&apos;t have an account? <Link href="/register" className="text-blue-500 hover:underline">Register</Link>
-            </p>
-        </div>
+        <div className="min-h-screen bg-sky-100 text-gray-800 font-sans">
+            <header className="container mx-auto py-6 px-4">
+                <nav className="flex justify-between items-center">
+                    <Link href="/" className="flex items-center">
+                        <Image 
+                            src="/brand_logo_black.png" 
+                            alt="ConklinOfficial Logo" 
+                            width={70} 
+                            height={25} 
+                            className="object-contain"
+                        />
+                    </Link>
+                    <Link href="/" className="text-lg hover:text-gray-600 transition-colors font-inter">
+                        Back to Home
+                    </Link>
+                </nav>
+            </header>
+
+            <main className="container mx-auto px-4 py-12">
+                <motion.div 
+                    className="max-w-md mx-auto bg-white p-8 rounded-xl shadow-2xl"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    <h1 className="text-4xl font-bold mb-6 text-center font-inter">Login</h1>
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                            <label htmlFor="email" className="block mb-1 font-inter">Email</label>
+                            <input
+                                type="email"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="password" className="block mb-1 font-inter">Password</label>
+                            <input
+                                type="password"
+                                id="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required
+                            />
+                        </div>
+                        {error && <p className="text-red-500">{error}</p>}
+                        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-full hover:bg-blue-600 transition-colors font-inter">
+                            Login
+                        </button>
+                    </form>
+                </motion.div>
+            </main>
         </div>
     );
 }

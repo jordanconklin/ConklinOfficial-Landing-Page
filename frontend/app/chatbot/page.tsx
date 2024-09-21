@@ -2,6 +2,7 @@
 import { useState, FormEvent, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 // Conversation interface when fetching previous conversations
 interface Conversation {
@@ -164,7 +165,7 @@ export default function Chatbot() {
 
     // ***** RETURN *****
     return (
-        <div className="min-h-screen bg-gradient-to-br from-sky-200 to-sky-300 text-gray-800 font-sans">
+        <div className="min-h-screen bg-sky-100 text-gray-800 font-sans">
             <header className="container mx-auto py-6 px-4">
                 <nav className="flex justify-between items-center">
                     <Link href="/" className="flex items-center">
@@ -176,23 +177,35 @@ export default function Chatbot() {
                             className="object-contain"
                         />
                     </Link>
-                    <Link href="/" className="text-lg hover:text-gray-600 transition-colors">
+                    <Link href="/" className="text-lg hover:text-gray-600 transition-colors font-inter">
                         Back to Home
                     </Link>
                 </nav>
             </header>
 
             <main className="container mx-auto px-4 py-12">
-                <h1 className="text-5xl font-bold mb-12 text-center">Chat with TekkAI</h1>
-                <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden flex h-[600px]">
+                <motion.h1 
+                    className="text-6xl font-bold mb-12 text-center font-inter"
+                    initial={{ opacity: 0, y: -50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    Chat with TekkAI
+                </motion.h1>
+                <motion.div 
+                    className="max-w-4xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden flex h-[600px]"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                >
                     <div className="w-1/4 bg-gray-100 p-4 overflow-y-auto">
-                        <h2 className="text-xl font-bold mb-4">Previous Chats</h2>
+                        <h2 className="text-xl font-bold mb-4 font-inter">Previous Chats</h2>
                         <ul>
                             {previousConversations.map((conv) => (
                                 <li key={conv.id} className="mb-2">
                                     <button
                                         onClick={() => loadConversation(conv.id)}
-                                        className="text-left w-full hover:bg-gray-200 p-2 rounded text-sm"
+                                        className="text-left w-full hover:bg-gray-200 p-2 rounded text-sm font-inter"
                                     >
                                         {conv.title}
                                     </button>
@@ -201,11 +214,11 @@ export default function Chatbot() {
                         </ul>
                     </div>
                     <div className="flex-1 flex flex-col">
-                        <div className="flex justify-between items-center mb-4">
-                            <h2 className=""></h2>
+                        <div className="flex justify-between items-center mb-4 p-4">
+                            <h2 className="text-2xl font-bold font-inter">Current Chat</h2>
                             <button
                                 onClick={startNewConversation}
-                                className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                                className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-colors font-inter"
                             >
                                 Start New Conversation
                             </button>
@@ -256,7 +269,7 @@ export default function Chatbot() {
                             </form>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </main>
         </div>
     )
