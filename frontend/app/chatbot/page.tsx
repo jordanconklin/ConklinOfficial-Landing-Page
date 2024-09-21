@@ -218,7 +218,7 @@ export default function Chatbot() {
                             <h2 className="text-2xl font-bold font-inter">Current Chat</h2>
                             <button
                                 onClick={startNewConversation}
-                                className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-colors font-inter"
+                                className="bg-yellow-500 text-white px-6 py-2 rounded-full hover:bg-yellow-600 transition-colors font-inter"
                             >
                                 Start New Conversation
                             </button>
@@ -261,7 +261,7 @@ export default function Chatbot() {
                                 />
                                 <button
                                     type="submit"
-                                    className="bg-yellow-500 text-white px-6 py-2 rounded-r-lg hover:bg-yellow-600 transition-colors font-semibold"
+                                    className="bg-blue-500 text-white px-6 py-2 rounded-r-lg hover:bg-blue-600 transition-colors font-semibold"
                                     aria-label="Send message"
                                 >
                                     Send
