@@ -12,7 +12,7 @@ export async function POST(request: Request) {
 
     const { prompt, session_id } = await request.json();
 
-    const response = await fetch('http://127.0.0.1:8000/generate_tutorial/', {
+    const response = await fetch('${process.env.SERVER_URL}/generate_tutorial/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

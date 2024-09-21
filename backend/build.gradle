@@ -23,6 +23,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'com.stripe:stripe-java:22.0.0'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 }
 
 tasks.named('test') {

@@ -1,6 +1,7 @@
 package Tekk.SpringbootStripe.controller;
 
 import Tekk.SpringbootStripe.model.PaymentRequest;
+import Tekk.SpringbootStripe.model.PaymentSuccessRequest;
 import Tekk.SpringbootStripe.service.StripeService;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;

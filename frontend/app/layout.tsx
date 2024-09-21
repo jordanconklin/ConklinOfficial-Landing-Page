@@ -2,13 +2,16 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../styles/globals.css";
 
+// Importing the Inter font from Google Fonts
 const inter = Inter({ subsets: ["latin"] });
 
+// Metadata for the application
 export const metadata: Metadata = {
   title: "Soccer Brand Landing Page",
   description: "Explore our soccer products and chat with TekkAI",
 };
 
+// RootLayout is the layout for the entire application
 export default function RootLayout({
   children,
 }: Readonly<{

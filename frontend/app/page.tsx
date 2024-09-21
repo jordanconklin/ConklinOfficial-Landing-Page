@@ -55,12 +55,14 @@ export default function Home() {
   const handleLogout = async () => {
     console.log("Attempting logging out...")
     try {
+      // Send a POST request to the logout endpoint
       const response = await fetch('/api/logout', { method: 'POST' });
+      
+      // If the response is successful, update the state
       if (response.ok) {
-        localStorage.removeItem('token');
         setIsLoggedIn(false);
         await router.push('/');
-        window.location.reload();
+        // window.location.reload();
       } else {
         console.error('Logout failed');
       }
@@ -69,27 +71,40 @@ export default function Home() {
     }
   };
 
+  // Function to add a product to the cart
   const addToCart = (product: Product) => {
     setCartItems((prevItems) => {
+      // Check if the product already exists in the cart
       const existingItem = prevItems.find((item) => item.id === product.id);
       let newItems;
+
+      // If the product exists, increment its quantity
       if (existingItem) {
+        // Increment the quantity of the existing item
         newItems = prevItems.map((item) =>
           item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
         );
       } else {
+        // Add the product to the cart with a quantity of 1
         newItems = [...prevItems, { ...product, quantity: 1 }];
       }
+
+      // TODO save to backend / session store?
+      // Save the updated cart items to localStorage
       localStorage.setItem('cart', JSON.stringify(newItems));
       return newItems;
     });
   };
 
+  // Function to remove a product from the cart
   const removeFromCart = (id: string) => {
+    // Filter out the product with the given id
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
 
+  // Function to update the quantity of a product in the cart 
   const updateQuantity = (id: string, quantity: number) => {
+    // Update the quantity of the product with the given id
     setCartItems((prevItems) =>
       prevItems.map((item) => (item.id === id ? { ...item, quantity } : item))
     );
@@ -242,3 +257,4 @@ export default function Home() {
     </div>
   );
 }
+

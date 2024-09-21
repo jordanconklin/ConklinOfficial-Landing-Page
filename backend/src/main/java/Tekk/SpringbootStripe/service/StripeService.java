@@ -6,15 +6,15 @@ import com.stripe.model.PaymentIntent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class StripeService {
 
-    @Value("${stripe.secret.key}")
-    private String secretKey;
+    @Value("${STRIPE_API_KEY}")
+    private String secretKey;  
 
     @PostConstruct
     public void init() {
