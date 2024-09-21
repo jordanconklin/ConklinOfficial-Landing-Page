@@ -1,25 +1,30 @@
+import { NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
 
-// import { NextResponse } from 'next/server';
+export async function POST(request: Request) {
+  try {
+    const { name, email, message } = await request.json();
 
-// export async function POST(request: Request) {
-//   try {
-//     const { name, email, message } = await request.json();
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
 
-//     const response = await fetch('http://localhost:8080/api/send-email', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({ name, email, message, to: 'conklinofficialsoccer@gmail.com' }),
-//     });
+    let mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: 'conklinofficialsoccer@gmail.com',
+      subject: 'New Contact Form Submission',
+      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
+    };
 
-//     if (response.ok) {
-//       return NextResponse.json({ message: 'Email sent successfully' });
-//     } else {
-//       return NextResponse.json({ error: 'Failed to send email' }, { status: response.status });
-//     }
-//   } catch (error) {
-//     console.error('Error sending email:', error);
-//     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
-//   }
-// }
+    await transporter.sendMail(mailOptions);
+
+    return NextResponse.json({ message: 'Email sent successfully' });
+  } catch (error) {
+    console.error('Error sending email:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
