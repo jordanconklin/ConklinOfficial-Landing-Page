@@ -20,10 +20,14 @@ const ProductList: React.FC<ProductListProps> = ({ products, addToCart }) => {
       {products.map((product, index) => (
         <motion.div 
           key={product.id} 
-          className="bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl"
+          className="bg-white rounded-lg shadow-md overflow-hidden"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: index * 0.1 }}
+          whileHover={{ 
+            scale: 1.05,
+            transition: { duration: 0.2 }
+          }}
         >
           <Image src={product.image} alt={product.name} width={300} height={300} className="w-full h-64 object-cover" />
           <div className="p-4">
