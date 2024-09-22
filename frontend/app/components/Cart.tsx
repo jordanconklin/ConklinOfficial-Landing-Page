@@ -13,9 +13,10 @@ interface CartProps {
   items: CartItem[];
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
+  proceedToCheckout: () => void;
 }
 
-const Cart: React.FC<CartProps> = ({ items, removeFromCart, updateQuantity }) => {
+const Cart: React.FC<CartProps> = ({ items, removeFromCart, updateQuantity, proceedToCheckout }) => {
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
@@ -57,6 +58,12 @@ const Cart: React.FC<CartProps> = ({ items, removeFromCart, updateQuantity }) =>
           ))}
           <div className="mt-4 pt-4 border-t">
             <p className="text-xl font-bold">Total: ${total.toFixed(2)}</p>
+            <button
+              onClick={proceedToCheckout}
+              className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-colors"
+            >
+              Proceed to Checkout
+            </button>
           </div>
         </>
       )}
