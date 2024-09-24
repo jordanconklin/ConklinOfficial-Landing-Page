@@ -22,7 +22,10 @@ const PaymentForm = ({ amount }: { amount: number }) => {
       const response = await fetch('/api/create-payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: amount * 100 }) // Convert to cents
+        body: JSON.stringify({ 
+          amount: amount * 100, 
+          currency: 'usd' 
+        })
       });
 
       if (!response.ok) {

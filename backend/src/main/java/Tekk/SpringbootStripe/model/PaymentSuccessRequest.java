@@ -5,7 +5,7 @@ public class PaymentSuccessRequest {
 
     // Getter and setter
     public String getPaymentIntentId() {
-        return paymentIntentId;
+        return paymentIntentId; 
     }
 
     public void setPaymentIntentId(String paymentIntentId) {

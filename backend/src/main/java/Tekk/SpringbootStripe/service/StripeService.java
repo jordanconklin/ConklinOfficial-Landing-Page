@@ -22,9 +22,12 @@ public class StripeService {
     }
 
     public PaymentIntent createPaymentIntent(Long amount, String currency) throws StripeException {
+        if (currency == null || currency.isEmpty()) {
+            throw new IllegalArgumentException("Currency must be provided");
+        }
         Map<String, Object> params = new HashMap<>();
         params.put("amount", amount);
-        params.put("currency", currency);
+        params.put("currency", currency.toLowerCase());
         params.put("payment_method_types", new String[]{"card"});
 
         return PaymentIntent.create(params);
