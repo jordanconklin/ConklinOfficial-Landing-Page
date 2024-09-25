@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 interface Conversation {
     id: string;
     title: string;
+    timestamp: string;
 }
 
 // Message interface when fetching a conversation

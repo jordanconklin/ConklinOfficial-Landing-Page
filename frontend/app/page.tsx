@@ -20,7 +20,7 @@ interface CartItem extends Product {
 }
 
 export default function Home() {
-  // ***** STATE *****
+  // ***** STATE ***** 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);

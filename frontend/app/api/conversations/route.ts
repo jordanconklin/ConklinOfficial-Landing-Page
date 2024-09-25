@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { TEKK_APP_API_URL } from '../../config';
 
 export async function POST() {
   try {
@@ -10,7 +11,7 @@ export async function POST() {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
-    const response = await fetch('http://127.0.0.1:8000/conversations/new', {
+    const response = await fetch(`${TEKK_APP_API_URL}/conversations/new`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

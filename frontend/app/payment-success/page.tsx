@@ -44,9 +44,9 @@ export default function PaymentSuccessPage() {
           transition={{ duration: 0.8 }}
         >
           <div className="text-center">
-            <h1 className="text-4xl font-bold mb-4 text-green-600">Payment Successful!</h1>
+            <h1 className="text-4xl font-bold mb-4">Payment Successful!</h1>
             <p className="text-xl mb-8">Thank you for your purchase.</p>
-            <p>You will be redirected to the home page in 5 seconds...</p>
+            <p>Redirecting to home page...</p>
             <Link href="/" className="mt-4 inline-block px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors text-lg font-semibold font-inter">
               Return to Home
             </Link>

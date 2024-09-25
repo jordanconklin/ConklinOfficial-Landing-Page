@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
+import { TEKK_APP_API_URL } from '../../config';
 
 export async function POST(request: Request) {
   try {
     const playerInfo = await request.json();
     console.log('Registration attempt for email:', playerInfo.email);
 
-    const response = await fetch('http://127.0.0.1:8000/register/', {
+    const response = await fetch(`${TEKK_APP_API_URL}/register/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

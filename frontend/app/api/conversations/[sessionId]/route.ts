@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { TEKK_APP_API_URL } from '../../../config';
+
 
 export async function GET(request: Request, { params }: { params: { sessionId: string } }) {
   try {
@@ -12,7 +14,7 @@ export async function GET(request: Request, { params }: { params: { sessionId: s
 
     const { sessionId } = params;
 
-    const response = await fetch(`http://127.0.0.1:8000/conversations/${sessionId}`, {
+    const response = await fetch(`${TEKK_APP_API_URL}/conversations/${sessionId}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
