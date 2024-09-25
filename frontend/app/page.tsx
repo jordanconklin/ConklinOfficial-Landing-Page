@@ -200,7 +200,7 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <h2 className="text-4xl font-bold text-center mb-2 font-inter">New on the ConklinOfficial Store</h2>
             <div className="w-24 h-1 bg-blue-500 mx-auto mb-12"></div>
-            <ProductList products={products} addToCart={addToCart} />
+            <ProductList products={products} />
           </div>
         </motion.section>
 
