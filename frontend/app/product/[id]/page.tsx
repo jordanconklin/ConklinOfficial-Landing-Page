@@ -21,7 +21,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
     // For now, we'll use mock data
     const mockProduct: Product = {
       id: params.id,
-      name: 'ConklinOfficial Product',
+      name: 'ConklinOfficial Quarter Zip Pullover',
       price: 65.00,
       image: '/quarter-zip.jpg',
     };
@@ -42,33 +42,30 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="min-h-screen bg-sky-100 text-gray-800 font-sans">
-      <header className="container mx-auto py-6 px-4">
-        <nav className="flex justify-between items-center">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/brand_logo_black.png"
-              alt="ConklinOfficial Logo"
-              width={70}
-              height={25}
-              className="object-contain"
-            />
-          </Link>
-          <Link href="/" className="text-lg hover:text-gray-600 transition-colors font-inter">
-            Back to Home
-          </Link>
-        </nav>
+    <div className="min-h-screen flex flex-col">
+      <header className="bg-sky-100 py-6">
+        <div className="container mx-auto px-4">
+          <nav className="flex justify-between items-center">
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/brand_logo_black.png"
+                alt="ConklinOfficial Logo"
+                width={70}
+                height={25}
+                className="object-contain"
+              />
+            </Link>
+            <Link href="/" className="text-lg hover:text-gray-600 transition-colors font-inter">
+              Back to Home
+            </Link>
+          </nav>
+        </div>
       </header>
 
-      <main className="container mx-auto px-4 py-12">
-        <motion.div 
-          className="max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-2xl"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="flex flex-col md:flex-row">
-            <div className="md:w-1/2 mb-8 md:mb-0">
+      <main className="flex-grow bg-white">
+        <div className="container mx-auto px-4 py-12">
+          <div className="flex flex-col md:flex-row gap-12">
+            <div className="md:w-1/2">
               <Image
                 src={product.image}
                 alt={product.name}
@@ -77,20 +74,20 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
                 className="w-full h-auto object-cover rounded-lg"
               />
             </div>
-            <div className="md:w-1/2 md:pl-8">
-              <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
+            <div className="md:w-1/2">
+              <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
               <p className="text-2xl font-semibold mb-6">${product.price.toFixed(2)}</p>
               <div className="mb-6">
-                <h2 className="text-xl font-semibold mb-2">Select Size</h2>
-                <div className="flex space-x-4">
-                  {['S', 'M', 'L', 'XL'].map((size) => (
+                <h2 className="text-lg font-semibold mb-2">Select a size</h2>
+                <div className="flex flex-wrap gap-2">
+                  {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size)}
                       className={`px-4 py-2 border rounded-md ${
                         selectedSize === size
-                          ? 'bg-blue-500 text-white'
-                          : 'bg-white text-gray-800 hover:bg-gray-100'
+                          ? 'bg-black text-white'
+                          : 'bg-white text-black hover:bg-gray-100'
                       }`}
                     >
                       {size}
@@ -100,13 +97,13 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
               </div>
               <button
                 onClick={addToCart}
-                className="w-full bg-blue-500 text-white py-3 px-6 rounded-full hover:bg-blue-600 transition-colors text-lg font-semibold"
+                className="w-full bg-black text-white py-3 px-6 rounded-md hover:bg-gray-800 transition-colors text-lg font-semibold"
               >
-                Add to Cart
+                Add to Bag
               </button>
             </div>
           </div>
-        </motion.div>
+        </div>
       </main>
     </div>
   );
