@@ -15,7 +15,10 @@ interface Product {
   image: string;
 }
 
-interface CartItem extends Product {
+export interface CartItem {
+  id: number;
+  name: string;
+  price: number;
   quantity: number;
 }
 
@@ -71,48 +74,9 @@ export default function Home() {
     }
   };
 
-  // Function to add a product to the cart
-  const addToCart = (product: Product) => {
-    setCartItems((prevItems) => {
-      // Check if the product already exists in the cart
-      const existingItem = prevItems.find((item) => item.id === product.id);
-      let newItems;
-
-      // If the product exists, increment its quantity
-      if (existingItem) {
-        // Increment the quantity of the existing item
-        newItems = prevItems.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      } else {
-        // Add the product to the cart with a quantity of 1
-        newItems = [...prevItems, { ...product, quantity: 1 }];
-      }
-
-      // TODO save to backend / session store?
-      // Save the updated cart items to localStorage
-      localStorage.setItem('cart', JSON.stringify(newItems));
-      return newItems;
-    });
-  };
-
-  // Function to remove a product from the cart
-  const removeFromCart = (id: string) => {
-    // Filter out the product with the given id
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-  };
-
-  // Function to update the quantity of a product in the cart 
-  const updateQuantity = (id: string, quantity: number) => {
-    // Update the quantity of the product with the given id
-    setCartItems((prevItems) =>
-      prevItems.map((item) => (item.id === id ? { ...item, quantity } : item))
-    );
-  };
-
   // ***** RETURN *****
   return (
-    <div className="min-h-screen bg-sky-100 text-gray-800 font-sans">
+    <div className="flex flex-col min-h-screen bg-sky-100">
       <header className="container mx-auto py-6 px-4">
         <nav className="flex justify-between items-center">
           <Link href="/" className="flex items-center">
@@ -147,7 +111,7 @@ export default function Home() {
         </nav>
       </header>
 
-      <main>
+      <main className="flex-grow">
         <motion.section 
           className="container mx-auto px-4 flex items-center py-24"
           initial={{ opacity: 0, y: 50 }}
@@ -200,7 +164,7 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <h2 className="text-4xl font-bold text-center mb-2 font-inter">New on the ConklinOfficial Store</h2>
             <div className="w-24 h-1 bg-blue-500 mx-auto mb-12"></div>
-            <ProductList products={products} addToCart={addToCart} />
+            <ProductList products={products} />
           </div>
         </motion.section>
 
@@ -253,7 +217,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-      
     </div>
   );
 }

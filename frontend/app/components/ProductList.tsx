@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 interface Product {
@@ -11,10 +12,9 @@ interface Product {
 
 interface ProductListProps {
   products: Product[];
-  addToCart: (product: Product) => void;
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products, addToCart }) => {
+const ProductList: React.FC<ProductListProps> = ({ products }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
       {products.map((product, index) => (
@@ -29,17 +29,13 @@ const ProductList: React.FC<ProductListProps> = ({ products, addToCart }) => {
             transition: { duration: 0.2 }
           }}
         >
-          <Image src={product.image} alt={product.name} width={300} height={300} className="w-full h-64 object-cover" />
-          <div className="p-4">
-            <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-            <p className="text-gray-600 mb-4">${product.price.toFixed(2)}</p>
-            <button
-              onClick={() => addToCart(product)}
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
-            >
-              Add to Cart
-            </button>
-          </div>
+          <Link href={`/product/${product.id}`}>
+            <Image src={product.image} alt={product.name} width={300} height={300} className="w-full h-64 object-cover" />
+            <div className="p-4">
+              <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
+              <p className="text-gray-600 mb-4">${product.price.toFixed(2)}</p>
+            </div>
+          </Link>
         </motion.div>
       ))}
     </div>

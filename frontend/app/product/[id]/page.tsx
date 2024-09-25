@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import CartSlideOver from '../../components/CartSlideOver';
 
 interface Product {
   id: string;
@@ -12,12 +13,19 @@ interface Product {
   image: string;
 }
 
+interface CartItem extends Product {
+  quantity: number;
+  size: string;
+}
+
 export default function ProductDetail({ params }: { params: { id: string } }) {
   const [product, setProduct] = useState<Product | null>(null);
   const [selectedSize, setSelectedSize] = useState<string>('');
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
-    // In a real application, we will fetch the product data from an API
+    // In a real application, fetch the product data from an API
     // For now, we'll use mock data
     const mockProduct: Product = {
       id: params.id,
@@ -30,8 +38,20 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
 
   const addToCart = () => {
     if (product && selectedSize) {
-      // Add to cart logic here
-      console.log(`Added ${product.name} (${selectedSize}) to cart`);
+      const newItem: CartItem = { ...product, quantity: 1, size: selectedSize };
+      setCartItems(prevItems => {
+        const existingItem = prevItems.find(item => item.id === product.id && item.size === selectedSize);
+        if (existingItem) {
+          return prevItems.map(item => 
+            item.id === product.id && item.size === selectedSize
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          );
+        } else {
+          return [...prevItems, newItem];
+        }
+      });
+      setIsCartOpen(true);
     } else {
       alert('Please select a size');
     }
@@ -108,6 +128,8 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
           </div>
         </motion.div>
       </main>
+
+      <CartSlideOver isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} cartItems={cartItems} />
     </div>
   );
 }
