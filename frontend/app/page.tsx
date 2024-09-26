@@ -179,7 +179,7 @@ export default function Home() {
             <h2 className="text-4xl font-bold text-center mb-2">Contact Us</h2>
             <div className="w-24 h-1 bg-blue-500 mx-auto mb-6"></div>
             <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-              Have questions or need assistance? We're here to help! Fill out the form below, and we'll get back to you as soon as possible.
+              Have questions or need assistance? We&apos;re here to help! Fill out the form below, and we&apos;ll get back to you as soon as possible.
             </p>
             <ContactForm />
           </div>
