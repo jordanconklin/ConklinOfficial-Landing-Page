@@ -47,8 +47,8 @@ export default function CheckoutPage() {
             <Image
               src="/brand_logo_black.png"
               alt="ConklinOfficial Logo"
-              width={70}
-              height={25}
+              width={180}
+              height={80}
               className="object-contain"
             />
           </Link>

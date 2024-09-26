@@ -40,8 +40,8 @@ export default function Login() {
                         <Image 
                             src="/brand_logo_black.png" 
                             alt="ConklinOfficial Logo" 
-                            width={70} 
-                            height={25} 
+                            width={180} 
+                            height={80} 
                             className="object-contain"
                         />
                     </Link>
@@ -87,6 +87,9 @@ export default function Login() {
                             Login
                         </button>
                     </form>
+                    <p className="mt-4 text-center">
+                        Don't have an account? <Link href="/register" className="text-blue-500 hover:underline">Register here</Link>
+                    </p>
                 </motion.div>
             </main>
         </div>
