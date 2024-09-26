@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import ContactForm from './components/ContactForm';
 import { useRouter } from 'next/navigation';
 import ProductList from './components/ProductList';
@@ -83,8 +83,8 @@ export default function Home() {
             <Image 
               src="/brand_logo_black.png" 
               alt="ConklinOfficial Logo" 
-              width={70} 
-              height={25} 
+              width={180} 
+              height={80} 
               className="object-contain"
             />
           </Link>
@@ -197,8 +197,8 @@ export default function Home() {
               <Image 
                 src="/brand_logo_white.png" 
                 alt="ConklinOfficial Logo" 
-                width={70} 
-                height={25} 
+                width={180} 
+                height={80}
                 className="object-contain"
               />
             </div>

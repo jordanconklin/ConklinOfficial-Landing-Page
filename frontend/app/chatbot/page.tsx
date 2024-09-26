@@ -1,7 +1,7 @@
 'use client';
 import { useState, FormEvent, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { motion } from 'framer-motion';
 
 // Conversation interface when fetching previous conversations
@@ -273,5 +273,5 @@ export default function Chatbot() {
                 </motion.div>
             </main>
         </div>
-    )
+    );
 }
