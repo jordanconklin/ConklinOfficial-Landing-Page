@@ -20,10 +20,13 @@ export default function CartPage() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    // Load cart items from localStorage
+    console.log('Cart page loaded');
     const storedCart = localStorage.getItem('cart');
+    console.log('Stored cart:', storedCart);
     if (storedCart) {
-      setCartItems(JSON.parse(storedCart));
+      const parsedCart = JSON.parse(storedCart);
+      console.log('Parsed cart:', parsedCart);
+      setCartItems(parsedCart);
     }
   }, []);
 
