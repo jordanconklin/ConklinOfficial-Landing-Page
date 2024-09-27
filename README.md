@@ -1,76 +1,51 @@
-# ConklinOfficial Landing Page and TekkAI Chatbot
+# ConklinOfficial E-Commerce and Landing Page
 
-This project consists of a Next.js frontend for the ConklinOfficial landing page and a Spring Boot backend for handling Stripe payments and potentially other server-side operations.
+## Project Overview
 
-## Project Structure
+ConklinOfficial is a modern e-commerce platform and landing page for my soccer personal brand. The site showcases products, provides a seamless shopping experience, and will be implementing my custom chatbot once released.
 
-- `nextjs-frontend/`: Next.js frontend application
-- `spring-backend/`: Spring Boot backend application
+Visit the live site: [ConklinOfficial](https://conklinofficial-landing-page.vercel.app/)
 
-## Frontend (Next.js)
+## Technology Stack
 
-### Getting Started
+### Frontend
+- **Next.js 14.2.5**: React framework for server-side rendering and routing.
+- **React 18**: For building the user interface.
+- **TypeScript**: Adds static typing to enhance code quality and developer experience.
+- **Tailwind CSS**: Utility-first CSS framework for responsive design.
+- **Framer Motion**: For smooth animations and transitions.
 
-1. Navigate to the `nextjs-frontend` directory
-2. Install dependencies:
-   ```bash
-   npm install
+### Backend
+- **Spring Boot**: Java-based framework for the backend API.
+- **Stripe API**: For handling secure payment transactions.
+
+### APIs and Integrations
+- **Stripe.js**: Client-side library for Stripe integration.
+- **Nodemailer**: For sending emails through the contact form.
+
+### Deployment
+- **Vercel**: Hosts the Next.js frontend application.
+
+## Getting Started
+
+To run this project locally:
+
+1. Clone the repository
+2. Navigate to the frontend directory:
    ```
-3. Run the development server:
-   ```bash
+   cd frontend
+   npm install
    npm run dev
    ```
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+3. Open `http://localhost:3000` in your browser
 
-### Features
+## Future Enhancements
 
-- Responsive landing page
-- TekkAI Chatbot interface
-- Integration with Stripe for payments
+- Integration with a CMS for easy content management
+- Expanded product categories and filtering options
+- User reviews and ratings system
+- Social media integration for sharing products
 
-### Technologies Used
+## Contact
 
-- Next.js 14.2.5
-- React 18
-- Tailwind CSS
-- Stripe.js
-
-## Backend (Spring Boot)
-
-### Getting Started
-
-1. Navigate to the `spring-backend` directory
-2. Ensure you have Java 17 installed
-3. Run the application:
-   ```bash
-   ./gradlew bootRun
-   ```
-
-### Features
-
-- Stripe payment integration
-- RESTful API endpoints for payment processing
-
-### Technologies Used
-
-- Spring Boot 3.3.3
-- Java 17
-- Stripe Java SDK 22.0.0
-- PostgreSQL (for database, if applicable)
-
-## Environment Setup
-
-1. For the frontend, create a `.env.local` file in the `nextjs-frontend` directory with your Stripe publishable key:
-   ```
-   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
-   ```
-
-2. For the backend, create a `.env` file in the `spring-backend` directory with your Stripe secret key:
-   ```
-   STRIPE_SECRET_KEY=your_stripe_secret_key
-   ```
-
-## Deployment
-
-- Frontend: Deploy the Next.js app to Vercel or your preferred hosting platform
-- Backend: Deploy the Spring Boot application to a Java-compatible server (e.g., AWS, Heroku)
+For any inquiries about this project, please contact Jordan Conklin at jordinho@ucla.edu

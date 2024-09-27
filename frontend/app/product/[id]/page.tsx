@@ -25,7 +25,6 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
-    // Fetch product data from API
     const fetchProduct = async () => {
       try {
         const response = await fetch(`/api/products/${params.id}`);
