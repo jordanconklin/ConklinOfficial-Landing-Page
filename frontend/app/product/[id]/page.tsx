@@ -24,6 +24,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
+  // Fetch the product data from the API
   useEffect(() => {
     const fetchProduct = async () => {
       try {
