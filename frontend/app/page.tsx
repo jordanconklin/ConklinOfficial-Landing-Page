@@ -126,11 +126,17 @@ export default function Home() {
           >
             <h2 className="text-6xl font-bold mb-6 leading-tight font-inter">Chat with TekkAI</h2>
             <p className="text-xl mb-12 font-inter">Get personalized soccer advice and training tips from our AI assistant. Improve your game with instant, expert guidance.</p>
-            <Link 
+            {/* <Link 
               href={isLoggedIn ? "/chatbot" : "/login"} 
               className="inline-block px-8 py-4 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors text-xl font-semibold font-inter"
             >{"Try TekkAI Now →"}
-            </Link>
+            </Link> */}
+            <button 
+              onClick={() => alert('TekkAI is coming soon! Stay tuned for updates.')}
+              className="inline-block px-8 py-4 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors text-xl font-semibold font-inter"
+            >
+              Try TekkAI Now →
+            </button>
           </motion.div>
           <motion.div 
             className="w-1/2"
