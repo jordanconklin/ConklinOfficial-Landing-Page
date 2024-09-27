@@ -25,14 +25,20 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
-    // TODO fetch the product data from an API
-    const mockProduct: Product = {
-      id: params.id,
-      name: 'ConklinOfficial Product',
-      price: 65.00,
-      image: '/quarter-zip.jpg',
-    };
-    setProduct(mockProduct);
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(`/api/products/${params.id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch product');
+        }
+        const productData = await response.json();
+        setProduct(productData);
+      } catch (error) {
+        console.error('Error fetching product:', error);
+        // Handle error (e.g., show error message to user)
+      }
+
+    fetchProduct();
   }, [params.id]);
 
   const addToCart = () => {
