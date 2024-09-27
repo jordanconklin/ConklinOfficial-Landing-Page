@@ -38,17 +38,19 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
   const addToCart = () => {
     if (product && selectedSize) {
       const newItem: CartItem = { ...product, quantity: 1, size: selectedSize };
+      console.log('Adding to cart:', newItem);
       setCartItems(prevItems => {
-        const existingItem = prevItems.find(item => item.id === product.id && item.size === selectedSize);
-        if (existingItem) {
-          return prevItems.map(item => 
-            item.id === product.id && item.size === selectedSize
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
-          );
-        } else {
-          return [...prevItems, newItem];
-        }
+        const updatedItems = prevItems.find(item => item.id === product.id && item.size === selectedSize)
+          ? prevItems.map(item => 
+              item.id === product.id && item.size === selectedSize
+                ? { ...item, quantity: item.quantity + 1 }
+                : item
+            )
+          : [...prevItems, newItem];
+        console.log('Updated cart:', updatedItems);
+        localStorage.setItem('cart', JSON.stringify(updatedItems));
+        console.log('Cart saved to localStorage');
+        return updatedItems;
       });
       setIsCartOpen(true);
     } else {

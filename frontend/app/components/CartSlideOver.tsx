@@ -19,6 +19,7 @@ interface CartSlideOverProps {
 }
 
 const CartSlideOver: React.FC<CartSlideOverProps> = ({ isOpen, onClose, cartItems }) => {
+  console.log('CartSlideOver rendered with items:', cartItems);
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
