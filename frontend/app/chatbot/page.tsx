@@ -1,13 +1,14 @@
 'use client';
 import { useState, FormEvent, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { motion } from 'framer-motion';
 
 // Conversation interface when fetching previous conversations
 interface Conversation {
     id: string;
     title: string;
+    timestamp: string;
 }
 
 // Message interface when fetching a conversation
@@ -172,8 +173,8 @@ export default function Chatbot() {
                         <Image
                             src="/brand_logo_black.png"
                             alt="ConklinOfficial Logo"
-                            width={70}
-                            height={25}
+                            width={180}
+                            height={80}
                             className="object-contain"
                         />
                     </Link>
@@ -272,5 +273,5 @@ export default function Chatbot() {
                 </motion.div>
             </main>
         </div>
-    )
+    );
 }

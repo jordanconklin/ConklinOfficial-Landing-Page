@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { SPRING_APP_API_URL } from '../../config';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     console.log('Request body:', body);
-    const response = await fetch('http://localhost:8080/api/payment/create-payment-intent', {
+    const response = await fetch(`${SPRING_APP_API_URL}/api/payment/create-payment-intent`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { motion } from 'framer-motion';
 import Cart from '../components/Cart';
 
@@ -63,8 +63,8 @@ export default function CartPage() {
             <Image
               src="/brand_logo_black.png"
               alt="ConklinOfficial Logo"
-              width={70}
-              height={25}
+              width={180}
+              height={80}
               className="object-contain"
             />
           </Link>

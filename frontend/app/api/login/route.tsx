@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { TEKK_APP_API_URL } from '../../config';
 
 export const POST = async (request: Request) => {
   console.log('API route hit: /api/login');
@@ -6,7 +7,7 @@ export const POST = async (request: Request) => {
     const { email, password } = await request.json();
     console.log('Login attempt for email:', email);
 
-    const response = await fetch('http://127.0.0.1:8000/login/', {
+    const response = await fetch(`${TEKK_APP_API_URL}/login/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
