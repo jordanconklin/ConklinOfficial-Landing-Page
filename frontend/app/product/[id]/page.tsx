@@ -37,7 +37,6 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
         console.error('Error fetching product:', error);
         // Handle error (e.g., show error message to user)
       }
-    };
 
     fetchProduct();
   }, [params.id]);
