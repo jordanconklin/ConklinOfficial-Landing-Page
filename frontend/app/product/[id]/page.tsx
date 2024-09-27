@@ -25,8 +25,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
-    // In a real application, fetch the product data from an API
-    // For now, we'll use mock data
+    // TODO fetch the product data from an API
     const mockProduct: Product = {
       id: params.id,
       name: 'ConklinOfficial Product',
