@@ -25,6 +25,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
+    // Fetch product data from API
     const fetchProduct = async () => {
       try {
         const response = await fetch(`/api/products/${params.id}`);
@@ -35,7 +36,6 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
         setProduct(productData);
       } catch (error) {
         console.error('Error fetching product:', error);
-        // Handle error (e.g., show error message to user)
       }
     };
 
