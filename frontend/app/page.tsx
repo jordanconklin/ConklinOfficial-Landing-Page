@@ -221,7 +221,7 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-8 text-center">
-            <p>Copyright 2023 - ConklinOfficial</p>
+            <p>Copyright 2024 - ConklinOfficial</p>
           </div>
         </div>
       </footer>
