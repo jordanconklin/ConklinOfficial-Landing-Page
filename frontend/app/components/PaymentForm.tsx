@@ -28,11 +28,14 @@ const PaymentForm = ({ amount }: { amount: number }) => {
         })
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Failed to create payment intent');
+        console.error('Error response:', response.status, data);
+        throw new Error(data.error || 'Failed to create payment intent');
       }
 
-      const { clientSecret } = await response.json();
+      const { clientSecret } = data;
 
       const cardElement = elements.getElement(CardElement);
       if (!cardElement) {
@@ -54,6 +57,7 @@ const PaymentForm = ({ amount }: { amount: number }) => {
         router.push('/payment-success');
       }
     } catch (err) {
+      console.error('Payment error:', err);
       setError(err instanceof Error ? err.message : 'An unexpected error occurred');
     } finally {
       setProcessing(false);

@@ -13,12 +13,13 @@ export async function POST(req: NextRequest) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('Error response:', response.status, errorText);
-      throw new Error(`HTTP error! status: ${response.status}`);
+      return NextResponse.json({ error: `Server error: ${errorText}` }, { status: response.status });
     }
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
     console.error('Error creating payment intent:', error);
-    return NextResponse.json({ error: 'Error creating payment intent' }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return NextResponse.json({ error: `Error creating payment intent: ${errorMessage}` }, { status: 500 });
   }
 }
