@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.3.3'
+	id 'org.springframework.boot' version '3.1.5'
 	id 'io.spring.dependency-management' version '1.1.6'
 }
 
@@ -23,7 +23,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'com.stripe:stripe-java:22.0.0'
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	// implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 	implementation 'org.springframework.boot:spring-boot-starter'	
 }
@@ -32,8 +32,10 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-jar {
-	manifest {
-		attributes 'Main-Class': 'Tekk.SpringbootStripe.SpringbootStripeApplication'
-	}
+bootJar {
+    archiveFileName = 'app.jar'
+    manifest {
+        attributes 'Main-Class': 'org.springframework.boot.loader.JarLauncher'
+        attributes 'Start-Class': 'Tekk.SpringbootStripe.SpringbootStripeApplication'
+    }
 }
