@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { EMAIL_USER, EMAIL_PASS } from '../../config'; 
 
 export async function POST(request: Request) {
   try {
@@ -8,8 +9,8 @@ export async function POST(request: Request) {
     let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
+        user: EMAIL_USER,
+        pass: EMAIL_PASS
       }
     });
 

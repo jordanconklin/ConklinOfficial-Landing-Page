@@ -12,10 +12,6 @@
 
 const nextConfig = {
     reactStrictMode: true,
-    env: {
-        NEXT_PUBLIC_TEKK_APP_API_URL: process.env.TEKK_PUBLIC_API_URL,
-        NEXT_PUBLIC_SPRING_APP_API_URL: process.env.NEXT_PUBLIC_SPRING_APP_API_URL,
-        NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
-    },
   };
-export default nextConfig;
+  
+  export default nextConfig;

@@ -7,8 +7,9 @@ import PaymentForm from '../components/PaymentForm';
 import { motion } from 'framer-motion';
 import Image from "next/legacy/image";
 import Link from 'next/link';
+import { STRIPE_PUBLISHABLE_KEY } from '../config';
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY!);
 
 interface CartItem {
   id: string;
