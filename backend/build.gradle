@@ -25,8 +25,15 @@ dependencies {
 	implementation 'com.stripe:stripe-java:22.0.0'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
+	implementation 'org.springframework.boot:spring-boot-starter'	
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'Tekk.SpringbootStripe.SpringbootStripeApplication'
+	}
 }
