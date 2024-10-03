@@ -3,7 +3,7 @@ package Tekk.SpringbootStripe.service;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
-import org.springframework.beans.factory.annotation.Value;
+// import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
@@ -14,13 +14,19 @@ import java.util.Map;
 @Service
 public class StripeService {
 
-    @Value("${stripe.secret.key}")
-    private String secretKey;  
+    // @Value("${stripe.secret.key}")
+    // private String secretKey;  
 
     // his method is called after the bean is created
     @PostConstruct
     public void init() {
-        Stripe.apiKey = secretKey;
+        String stripeKey = System.getenv("STRIPE_API_KEY");
+        if (stripeKey == null || stripeKey.isEmpty()) {
+            System.out.println("Warning: STRIPE_API_KEY is not set. Stripe functionality may not work correctly.");
+        } else {
+            Stripe.apiKey = stripeKey;
+            System.out.println("Stripe secret key is set (value not shown for security)");
+        }
     }
 
     // Create payment intent for Stripe 
