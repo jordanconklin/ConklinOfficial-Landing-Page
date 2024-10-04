@@ -5,6 +5,8 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     console.log('Request body:', body);
+    console.log('SPRING_APP_API_URL:', SPRING_APP_API_URL);
+    console.log('Full URL:', `${SPRING_APP_API_URL}/api/payment/create-payment-intent`);
     const response = await fetch(`${SPRING_APP_API_URL}/api/payment/create-payment-intent`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

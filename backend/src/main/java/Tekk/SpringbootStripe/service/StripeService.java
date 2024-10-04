@@ -3,29 +3,36 @@ package Tekk.SpringbootStripe.service;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
-// import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // This is the service class that handles the Stripe API calls
 @Service
 public class StripeService {
 
-    // @Value("${stripe.secret.key}")
-    // private String secretKey;  
+    private static final Logger logger = LoggerFactory.getLogger(StripeService.class);
 
-    // his method is called after the bean is created
+    // @Value("${stripe.secret.key}")
+    // private String stripeApiKey;  
+    @Value("${STRIPE_API_KEY}")
+    private String stripeApiKey;
+
+    // This method is called after the bean is created
     @PostConstruct
     public void init() {
-        String stripeKey = System.getenv("STRIPE_API_KEY");
-        if (stripeKey == null || stripeKey.isEmpty()) {
-            System.out.println("Warning: STRIPE_API_KEY is not set. Stripe functionality may not work correctly.");
+        logger.info("Attempting to load STRIPE_API_KEY");
+        if (stripeApiKey == null || stripeApiKey.isEmpty()) {
+            logger.error("STRIPE_API_KEY is not set or is empty");
+            throw new IllegalStateException("STRIPE_API_KEY is not set. Stripe functionality will not work.");
         } else {
-            Stripe.apiKey = stripeKey;
-            System.out.println("Stripe secret key is set (value not shown for security)");
+            Stripe.apiKey = stripeApiKey;
+            logger.info("Stripe secret key is set successfully");
         }
     }
 
