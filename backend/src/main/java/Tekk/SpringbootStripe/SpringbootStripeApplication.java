@@ -2,33 +2,34 @@ package Tekk.SpringbootStripe;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // This is the main class that runs the Spring Boot application
 @SpringBootApplication
 public class SpringbootStripeApplication {
 
+	private static final Logger logger = LoggerFactory.getLogger(SpringbootStripeApplication.class);
+
 	public static void main(String[] args) {
-		System.out.println("Application starting...");
-		System.out.println("Java version: " + System.getProperty("java.version"));
-		System.out.println("Working directory: " + System.getProperty("user.dir"));
+		logger.info("Application starting...");
+		logger.info("Java version: " + System.getProperty("java.version"));
+		logger.info("Working directory: " + System.getProperty("user.dir"));
 		
-		System.out.println("Environment variables:");
-		System.getenv().forEach((key, value) -> System.out.println(key + "=" + (key.contains("KEY") ? "******" : value)));
+		logger.info("Environment variables:");
+		System.getenv().forEach((key, value) -> 
+			logger.info(key + "=" + (key.contains("KEY") ? "******" : value))
+		);
 		
 		String stripeKey = System.getenv("STRIPE_API_KEY");
 		if (stripeKey == null || stripeKey.isEmpty()) {
-			System.err.println("STRIPE_API_KEY is not set!");
+			logger.error("STRIPE_API_KEY is not set!");
 		} else {
-			System.out.println("STRIPE_API_KEY is set (value not shown for security)");
+			logger.info("STRIPE_API_KEY is set (value not shown for security)");
 		}
 		
-		try {
-			SpringApplication.run(SpringbootStripeApplication.class, args);
-			System.out.println("Application started successfully");
-		} catch (Exception e) {
-			System.err.println("Error starting application: " + e.getMessage());
-			e.printStackTrace();
-		}
+		SpringApplication.run(SpringbootStripeApplication.class, args);
+		logger.info("Application started successfully");
 	}
 
 }
