@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { SPRING_APP_API_URL } from '../../config';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     console.log('Request body:', body);
-    console.log('SPRING_APP_API_URL:', SPRING_APP_API_URL);
-    console.log('Full URL:', `${SPRING_APP_API_URL}/api/payment/create-payment-intent`);
+    console.log('API URL:', process.env.NEXT_PUBLIC_SPRING_API_URL);
+    console.log('Full URL:', `${process.env.NEXT_PUBLIC_SPRING_API_URL}/api/payment/create-payment-intent`);
 
-    // const response = await fetch(`${SPRING_APP_API_URL}/api/payment/create-payment-intent`, {
-    const response = await fetch(`https://conklinofficial-landing-page-b35b2e4733f8.herokuapp.com/api/payment/create-payment-intent`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SPRING_API_URL}/api/payment/create-payment-intent`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
