@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { TEKK_APP_API_URL } from '../../config';
 
 export async function GET() {
   try {
@@ -11,7 +10,7 @@ export async function GET() {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
-    const response = await fetch(`${TEKK_APP_API_URL}/get_previous_conversations/`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_TEKK_API_URL}/get_previous_conversations/`, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },

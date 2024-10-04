@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { TEKK_APP_API_URL } from '../../config';
 
 export async function POST(request: Request) {
   try {
@@ -13,7 +12,7 @@ export async function POST(request: Request) {
 
     const { prompt, session_id } = await request.json();
 
-    const response = await fetch(`${TEKK_APP_API_URL}/generate_tutorial/`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_TEKK_API_URL}/generate_tutorial/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

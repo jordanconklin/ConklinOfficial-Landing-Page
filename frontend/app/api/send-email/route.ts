@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-import { EMAIL_USER, EMAIL_PASS } from '../../config'; 
 
 export async function POST(request: Request) {
   try {
@@ -9,13 +8,13 @@ export async function POST(request: Request) {
     let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: EMAIL_USER,
-        pass: EMAIL_PASS
+        user: process.env.NEXT_PUBLIC_EMAIL_USER,
+        pass: process.env.NEXT_PUBLIC_EMAIL_PASS
       }
     });
 
     let mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: process.env.NEXT_PUBLIC_EMAIL_USER,
       to: 'conklinofficialsoccer@gmail.com',
       subject: 'New Contact Form Submission',
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
