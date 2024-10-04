@@ -7,7 +7,9 @@ export async function POST(req: NextRequest) {
     console.log('Request body:', body);
     console.log('SPRING_APP_API_URL:', SPRING_APP_API_URL);
     console.log('Full URL:', `${SPRING_APP_API_URL}/api/payment/create-payment-intent`);
-    const response = await fetch(`${SPRING_APP_API_URL}/api/payment/create-payment-intent`, {
+
+    // const response = await fetch(`${SPRING_APP_API_URL}/api/payment/create-payment-intent`, {
+    const response = await fetch(`https://conklinofficial-landing-page-b35b2e4733f8.herokuapp.com/api/payment/create-payment-intent`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
