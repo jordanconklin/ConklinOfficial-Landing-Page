@@ -8,12 +8,8 @@ import { motion } from 'framer-motion';
 
 export default function Register() {
     const [formData, setFormData] = useState({
-        first_name: '',
-        last_name: '',
         email: '',
         password: '',
-        age: '',
-        position: '',
     });
     const [error, setError] = useState('');
     const router = useRouter();
@@ -72,30 +68,6 @@ export default function Register() {
                     {error && <p className="text-red-500 text-center mb-4">{error}</p>}
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
-                            <label htmlFor="first_name" className="block mb-1 font-inter">First Name</label>
-                            <input
-                                type="text"
-                                id="first_name"
-                                name="first_name"
-                                value={formData.first_name}
-                                onChange={handleChange}
-                                className="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="last_name" className="block mb-1 font-inter">Last Name</label>
-                            <input
-                                type="text"
-                                id="last_name"
-                                name="last_name"
-                                value={formData.last_name}
-                                onChange={handleChange}
-                                className="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                required
-                            />
-                        </div>
-                        <div>
                             <label htmlFor="email" className="block mb-1 font-inter">Email</label>
                             <input
                                 type="email"
@@ -114,30 +86,6 @@ export default function Register() {
                                 id="password"
                                 name="password"
                                 value={formData.password}
-                                onChange={handleChange}
-                                className="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="age" className="block mb-1 font-inter">Age</label>
-                            <input
-                                type="number"
-                                id="age"
-                                name="age"
-                                value={formData.age}
-                                onChange={handleChange}
-                                className="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="position" className="block mb-1 font-inter">Position</label>
-                            <input
-                                type="text"
-                                id="position"
-                                name="position"
-                                value={formData.position}
                                 onChange={handleChange}
                                 className="w-full px-4 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 required
