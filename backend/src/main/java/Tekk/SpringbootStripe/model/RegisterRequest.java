@@ -3,6 +3,7 @@ package Tekk.SpringbootStripe.model;
 public class RegisterRequest {
     private String email;
     private String password;
+    private String confirmPassword;
 
     // Getters and setters
     public String getEmail() {
@@ -21,4 +22,11 @@ public class RegisterRequest {
         this.password = password;
     }
 
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
 }

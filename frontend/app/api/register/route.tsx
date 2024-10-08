@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json();
+    const { email, password, confirmPassword } = await request.json();
     console.log('Registration attempt for email:', email);
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_SPRING_API_URL}/api/users/register`, {
@@ -10,7 +10,7 @@ export async function POST(request: Request) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, confirmPassword }),
     });
 
     console.log('Backend response status:', response.status);

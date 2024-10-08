@@ -25,16 +25,19 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest request) {
         try {
+            if (!request.getPassword().equals(request.getConfirmPassword())) {
+                return ResponseEntity.badRequest().body("{\"error\": \"Passwords do not match\"}");
+            }
             logger.info("Attempting to register user with email: {}", request.getEmail());
             UserRecord userRecord = userService.createUser(request.getEmail(), request.getPassword());
             logger.info("User registered successfully with UID: {}", userRecord.getUid());
             return ResponseEntity.ok().body("{\"uid\": \"" + userRecord.getUid() + "\"}");
         } catch (FirebaseAuthException e) {
             logger.error("Firebase Auth Exception during registration: ", e);
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body("{\"error\": \"" + e.getMessage() + "\"}");
         } catch (Exception e) {
             logger.error("Unexpected error during registration: ", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\": \"An unexpected error occurred\"}");
         }
     }
 
