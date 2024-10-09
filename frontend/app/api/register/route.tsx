@@ -14,20 +14,31 @@ export async function POST(request: Request) {
     });
 
     console.log('Backend response status:', response.status);
+    const textResponse = await response.text();
+    console.log('Raw response:', textResponse);
+
+    console.log('Attempting to parse JSON:', textResponse);
     let data;
     try {
-      const textResponse = await response.text();
-      console.log('Raw response:', textResponse);
       data = JSON.parse(textResponse);
     } catch (parseError) {
       console.error('Error parsing response:', parseError);
       return NextResponse.json({ error: 'Invalid response from server' }, { status: 500 });
     }
+
     console.log('Backend response data:', data);
 
-    if (response.ok && data && data.uid) {
+    if (response.ok && data && data.uid && data.token) {
       console.log('Registration successful');
-      return NextResponse.json({ message: 'Registration successful', uid: data.uid });
+      const nextResponse = NextResponse.json({ message: 'Registration successful', uid: data.uid });
+      nextResponse.cookies.set('token', data.token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 24 * 60 * 60, // 24 hours
+        path: '/',
+      });
+      return nextResponse;
     } else {
       console.error('Registration failed:', data.error || 'Unknown error');
       return NextResponse.json({ error: data.error || 'Registration failed' }, { status: response.status });

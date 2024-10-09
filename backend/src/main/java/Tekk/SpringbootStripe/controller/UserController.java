@@ -1,7 +1,6 @@
 package Tekk.SpringbootStripe.controller;
 
 import Tekk.SpringbootStripe.service.UserService;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -20,24 +21,26 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest request) {
         try {
             if (!request.getPassword().equals(request.getConfirmPassword())) {
-                return ResponseEntity.badRequest().body("{\"error\": \"Passwords do not match\"}");
+                logger.warn("Password mismatch during registration for email: {}", request.getEmail());
+                return ResponseEntity.badRequest().body(Map.of("error", "Passwords do not match"));
             }
+
             logger.info("Attempting to register user with email: {}", request.getEmail());
             UserRecord userRecord = userService.createUser(request.getEmail(), request.getPassword());
+
+            String jwtToken = userService.generateJwtToken(userRecord.getUid());
             logger.info("User registered successfully with UID: {}", userRecord.getUid());
-            return ResponseEntity.ok().body("{\"uid\": \"" + userRecord.getUid() + "\"}");
-        } catch (FirebaseAuthException e) {
-            logger.error("Firebase Auth Exception during registration: ", e);
-            return ResponseEntity.badRequest().body("{\"error\": \"" + e.getMessage() + "\"}");
+
+            return ResponseEntity.ok().body(Map.of("uid", userRecord.getUid(), "token", jwtToken));
         } catch (Exception e) {
-            logger.error("Unexpected error during registration: ", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\": \"An unexpected error occurred\"}");
+            logger.error("Unexpected error during registration: {}", e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "An unexpected error occurred"));
         }
     }
 
@@ -45,10 +48,28 @@ public class UserController {
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest request) {
         try {
             UserRecord userRecord = userService.getUserByEmail(request.getEmail());
-            // Here you would typically create and return a JWT token
-            return ResponseEntity.ok(userRecord.getUid());
-        } catch (FirebaseAuthException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            String encryptedPassword = userService.getEncryptedPassword(userRecord.getUid());
+            if (encryptedPassword != null && userService.validatePassword(request.getPassword(), encryptedPassword)) {
+                String jwtToken = userService.generateJwtToken(userRecord.getUid());
+                return ResponseEntity.ok().body(Map.of("uid", userRecord.getUid(), "token", jwtToken));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid credentials"));
+            }
+        } catch (Exception e) {
+            logger.error("Error during login: ", e);
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
+    }
+
+    @RequestMapping("/log") public String log()
+    {
+        // Logging various log level messages
+        logger.trace("Log level: TRACE");
+        logger.info("Log level: INFO");
+        logger.debug("Log level: DEBUG");
+        logger.error("Log level: ERROR");
+        logger.warn("Log level: WARN");
+
+        return "Hey! You can check the output in the logs";
     }
 }
