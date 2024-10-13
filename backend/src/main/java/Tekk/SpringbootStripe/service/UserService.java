@@ -65,13 +65,13 @@ public class UserService {
         logger.info("User created successfully with UID: {}", userRecord.getUid());
         
         String encryptedPassword = passwordEncoder.encode(password);
-        String jwtToken = generateJwtToken(userRecord.getUid());
+        // String jwtToken = generateJwtToken(userRecord.getUid());
         String uuid = UUID.randomUUID().toString();
 
         Map<String, Object> userData = new HashMap<>();
         userData.put("email", email);
         userData.put("encryptedPassword", encryptedPassword);
-        userData.put("jwtToken", jwtToken);
+        // userData.put("jwtToken", jwtToken);
         userData.put("createdAt", System.currentTimeMillis());
         userData.put("uuid", uuid);
         

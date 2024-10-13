@@ -5,6 +5,12 @@ export async function POST(request: Request) {
     const { email, password, confirmPassword } = await request.json();
     console.log('Registration attempt for email:', email);
 
+    console.log('Full request URL:', `${process.env.NEXT_PUBLIC_SPRING_API_URL}/api/users/register`);
+    console.log('Request headers:', {
+      'Content-Type': 'application/json',
+    });
+    console.log('Request body:', JSON.stringify({ email, password, confirmPassword }));
+
     const response = await fetch(`${process.env.NEXT_PUBLIC_SPRING_API_URL}/api/users/register`, {
       method: 'POST',
       headers: {
@@ -14,6 +20,7 @@ export async function POST(request: Request) {
     });
 
     console.log('Backend response status:', response.status);
+    console.log('backend response:', response)
     const textResponse = await response.text();
     console.log('Raw response:', textResponse);
 
@@ -28,16 +35,17 @@ export async function POST(request: Request) {
 
     console.log('Backend response data:', data);
 
-    if (response.ok && data && data.uid && data.token) {
+    // if (response.ok && data && data.uid && data.token) {
+    if (response.ok && data && data.uid) {
       console.log('Registration successful');
       const nextResponse = NextResponse.json({ message: 'Registration successful', uid: data.uid });
-      nextResponse.cookies.set('token', data.token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
-        maxAge: 24 * 60 * 60, // 24 hours
-        path: '/',
-      });
+      // nextResponse.cookies.set('token', data.token, {
+      //   httpOnly: true,
+      //   secure: process.env.NODE_ENV === 'production',
+      //   sameSite: 'strict',
+      //   maxAge: 24 * 60 * 60, // 24 hours
+      //   path: '/',
+      // });
       return nextResponse;
     } else {
       console.error('Registration failed:', data.error || 'Unknown error');

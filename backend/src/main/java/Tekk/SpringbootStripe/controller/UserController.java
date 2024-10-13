@@ -34,10 +34,12 @@ public class UserController {
             logger.info("Attempting to register user with email: {}", request.getEmail());
             UserRecord userRecord = userService.createUser(request.getEmail(), request.getPassword());
 
-            String jwtToken = userService.generateJwtToken(userRecord.getUid());
+            // String jwtToken = userService.generateJwtToken(userRecord.getUid());
             logger.info("User registered successfully with UID: {}", userRecord.getUid());
 
-            return ResponseEntity.ok().body(Map.of("uid", userRecord.getUid(), "token", jwtToken));
+            // return ResponseEntity.ok().body(Map.of("uid", userRecord.getUid(), "token", jwtToken));
+            return ResponseEntity.ok().body(Map.of("uid", userRecord.getUid(), "message", "Registration successful"));
+            
         } catch (Exception e) {
             logger.error("Unexpected error during registration: {}", e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "An unexpected error occurred"));
