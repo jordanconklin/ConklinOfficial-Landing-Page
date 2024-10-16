@@ -42,17 +42,17 @@ public class UserService {
     }
 
     public UserRecord createUser(String email, String password) throws FirebaseAuthException {
+        // Set email and passord in Firebase so they can handle auth
         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
             .setEmail(email)
             .setPassword(password);
 
         UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
-        
+
         // Store user data in Firestore
         Map<String, Object> userData = new HashMap<>();
-        userData.put("email", email);
         userData.put("createdAt", System.currentTimeMillis());
-        
+
         firestore.collection("users").document(userRecord.getUid()).set(userData);
 
         return userRecord;

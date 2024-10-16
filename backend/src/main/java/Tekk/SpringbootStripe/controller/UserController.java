@@ -10,9 +10,6 @@ import Tekk.SpringbootStripe.model.RegisterRequest;
 import Tekk.SpringbootStripe.model.LoginRequest;
 import org.springframework.http.HttpStatus;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -20,7 +17,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest request) {
@@ -28,15 +24,11 @@ public class UserController {
             if (!request.getPassword().equals(request.getConfirmPassword())) {
                 return ResponseEntity.badRequest().body("{\"error\": \"Passwords do not match\"}");
             }
-            logger.info("Attempting to register user with email: {}", request.getEmail());
             UserRecord userRecord = userService.createUser(request.getEmail(), request.getPassword());
-            logger.info("User registered successfully with UID: {}", userRecord.getUid());
             return ResponseEntity.ok().body("{\"uid\": \"" + userRecord.getUid() + "\"}");
         } catch (FirebaseAuthException e) {
-            logger.error("Firebase Auth Exception during registration: ", e);
             return ResponseEntity.badRequest().body("{\"error\": \"" + e.getMessage() + "\"}");
         } catch (Exception e) {
-            logger.error("Unexpected error during registration: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\": \"An unexpected error occurred\"}");
         }
     }
@@ -45,10 +37,23 @@ public class UserController {
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest request) {
         try {
             UserRecord userRecord = userService.getUserByEmail(request.getEmail());
-            // Here you would typically create and return a JWT token
-            return ResponseEntity.ok(userRecord.getUid());
+            // Here you would typically verify the password
+            // For now, we'll just check if the user exists
+            if (userRecord != null) {
+                String token = generateJwtToken(userRecord); // Implement this method
+                return ResponseEntity.ok().body("{\"token\": \"" + token + "\"}");
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"error\": \"Invalid credentials\"}");
+            }
         } catch (FirebaseAuthException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body("{\"error\": \"" + e.getMessage() + "\"}");
         }
+    }
+
+    private String generateJwtToken(UserRecord userRecord) {
+        // Implement JWT token generation here
+        // You'll need to add a JWT library to your project
+        // For example, you can use jjwt library
+        return "dummy-token"; // Replace with actual token generation
     }
 }

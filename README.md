@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-ConklinOfficial is a modern e-commerce platform and landing page for my soccer personal brand. The site showcases products, provides a seamless shopping experience, and will be implementing my custom chatbot once released.
+ConklinOfficial is a modern e-commerce platform and landing page for my soccer personal brand. The site showcases products and provides a seamless shopping experience.
 
 Visit the live site: [ConklinOfficial](https://conklinofficial-landing-page.vercel.app/)
 
