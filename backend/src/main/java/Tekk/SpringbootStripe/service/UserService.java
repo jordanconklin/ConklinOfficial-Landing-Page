@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.cloud.FirestoreClient;
-import java.io.FileInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,23 +16,20 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 import javax.annotation.PostConstruct;
-import java.io.InputStream;
-
 
 @Service
 public class UserService {
 
     private Firestore firestore;
 
-    @Value("${FIREBASE_SERVICE_ACCOUNT_KEY}")
-    private String firebaseConfigJson;
+    @Value("${FIREBASE_CONFIG}")
+    private String firebaseConfig;
 
     @PostConstruct
     public void initialize() throws IOException {
         try {
-            InputStream serviceAccount = new FileInputStream(firebaseConfigJson);
             FirebaseOptions options = FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .setCredentials(GoogleCredentials.fromStream(new ByteArrayInputStream(firebaseConfig.getBytes())))
                 .build();
 
             if (FirebaseApp.getApps().isEmpty()) {
