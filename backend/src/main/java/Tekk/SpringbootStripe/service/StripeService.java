@@ -17,9 +17,7 @@ import org.slf4j.LoggerFactory;
 public class StripeService {
 
     private static final Logger logger = LoggerFactory.getLogger(StripeService.class);
-
-    // @Value("${stripe.secret.key}")
-    // private String stripeApiKey;  
+ 
     @Value("${STRIPE_API_KEY}")
     private String stripeApiKey;
 
