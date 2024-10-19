@@ -37,7 +37,6 @@ out/
 .vscode/
 
 .env
-src/main/resources/application.properties
 
 ### Credentials ###
 firebase-service-account.json

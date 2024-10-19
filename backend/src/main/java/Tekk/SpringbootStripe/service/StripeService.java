@@ -24,6 +24,7 @@ public class StripeService {
     // This method is called after the bean is created
     @PostConstruct
     public void init() {
+        // Log the attempt to load the Stripe API key
         logger.info("Attempting to load STRIPE_API_KEY");
         if (stripeApiKey == null || stripeApiKey.isEmpty()) {
             logger.error("STRIPE_API_KEY is not set or is empty");
