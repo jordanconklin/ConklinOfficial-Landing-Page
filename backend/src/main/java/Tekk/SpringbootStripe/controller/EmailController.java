@@ -15,14 +15,13 @@ public class EmailController {
 
     @PostMapping("/api/send-email")
     public String sendEmail(@RequestBody EmailRequest request) {
-        String to = "conklinofficialsoccer@gmail.com";
         String subject = "New message from " + request.getName();
         String body = String.format("Name: %s\nEmail: %s\nMessage: %s", 
                                     request.getName(), 
                                     request.getEmail(), 
                                     request.getMessage());
             
-        emailService.sendEmail(to, subject, body);
+        emailService.sendEmail(subject, body);
         return "Email sent successfully";
     }
 }

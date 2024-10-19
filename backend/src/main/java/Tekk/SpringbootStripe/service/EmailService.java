@@ -4,10 +4,14 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.beans.factory.annotation.Value;
 
 @Service
 public class EmailService {
     
+    @Value("${SPRING_MAIL_USERNAME}")
+    private String to;
+
     private final JavaMailSender mailSender;
 
     public EmailService(JavaMailSender mailSender) {
@@ -15,9 +19,9 @@ public class EmailService {
     }
     
     @Async
-    public void sendEmail(String to, String subject, String body) {
+    public void sendEmail(String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
+        message.setTo(this.to);
         message.setSubject(subject);
         message.setText(body);
 
